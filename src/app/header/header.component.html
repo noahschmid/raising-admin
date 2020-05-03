@@ -23,12 +23,19 @@
           {{username}}
         </a>
 
-        <div class="navbar-dropdown is-right" [routerLink]="['/admin/account', accountId]">
-          <a class="navbar-item">
+        <div class="navbar-dropdown is-right">
+          <a class="navbar-item" [routerLink]="['/admin/account', accountId]">
             <span class="icon is-small">
               <i class="fa fa-user-o"></i>
             </span>
             &nbsp; Profile
+          </a>
+          <hr class="navbar-divider">
+          <a class="navbar-item" (click)="copyToken()">
+            <span class="icon is-small">
+              <i class="fa fa-clipboard"></i>
+            </span>
+            &nbsp; Copy Token
           </a>
           <hr class="navbar-divider">
           <a class="navbar-item" (click)="logout()">
@@ -42,3 +49,5 @@
     </div>
   </nav>
 </header>
+
+<p-toast></p-toast>

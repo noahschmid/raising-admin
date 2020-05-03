@@ -9,10 +9,13 @@
                   + startup.profilePictureId : 'assets/images/user.png'" />
   <div class="center-info">
 
-    <b class="title" *ngIf="!editMode">{{ startup.firstName }} {{ startup.lastName }}</b>
-    <input *ngIf="editMode" pInputText id="firstName" [value]="startup.firstName" /> <input *ngIf="editMode" pInputText
-      id="lastName" [value]="startup.lastName" />
+    <b class="title" *ngIf="!editMode">{{ startup.companyName }}</b>
+    <input *ngIf="editMode" pInputText id="firstName" [(ngModel)]="startup.companyName" />
     <ul style="list-style-type:none">
+      <li><b>Contact Name</b></li>
+      <li *ngIf="!editMode">{{ startup.firstName }} {{ startup.lastName }} </li>
+      <input *ngIf="editMode" pInputText id="firstName" [(ngModel)]="startup.firstName" /> <input *ngIf="editMode" pInputText
+      id="lastName" [value]="startup.lastName" />
       <li><b> Country</b></li>
       <li> {{ startup.country }}&nbsp;
         <button *ngIf="editMode" pButton class="blue-button" icon="pi pi-pencil"></button>
@@ -20,12 +23,19 @@
 
       <li><b>Description</b></li>
       <li *ngIf="!editMode"> {{ startup.description }} </li>
-      <textarea [rows]="2" [cols]="50" *ngIf="editMode" pInputText id="description" [value]="startup.description" ></textarea>
+      <textarea [rows]="2" [cols]="50" *ngIf="editMode" pInputText id="description" [(ngModel)]="startup.description" ></textarea>
+      
       <li><b>Pitch</b></li>
       <li *ngIf="!editMode"> {{ startup.pitch }} </li>
-      <textarea [rows]="10" [cols]="50" *ngIf="editMode" pInputTextarea id="pitch" [value]="startup.pitch" ></textarea>
+      <textarea [rows]="10" [cols]="50" *ngIf="editMode" pInputTextarea id="pitch" [(ngModel)]="startup.pitch" ></textarea>
+
+      <li><b>Investment Phase</b></li>
+      <li *ngIf="!editMode"> {{ startup.investmentPhase }} </li>
+      <button *ngIf="editMode" pButton class="blue-button" icon="pi pi-pencil"></button>
+      
       <li><b>Ticket Size</b></li>
       <li> {{ startup.ticketMin }} - {{ startup.ticketMax }}</li>
+      
       <li><b>Involvement</b></li>
       <ul style="list-style-type:none">
         <li *ngFor="let spprt of startup.supportNames"> {{ spprt }} &nbsp;
@@ -40,9 +50,9 @@
         </li>
         <li *ngIf="editMode"><button type="button" class="blue-button" pButton icon="pi pi-plus"></button></li>
       </ul>
-      <li><b>Investment Phases</b></li>
+      <li><b>Investor Types</b></li>
       <ul style="list-style-type:none;">
-        <li *ngFor="let phase of startup.investmentPhaseNames"> {{ phase }}&nbsp;
+        <li *ngFor="let type of startup.investorTypeNames"> {{ type }}&nbsp;
           <button *ngIf="editMode" type="button" class="red-button" pButton icon="pi pi-times"></button>
         </li>
         <li *ngIf="editMode"><button type="button" class="blue-button" pButton icon="pi pi-plus"></button></li>

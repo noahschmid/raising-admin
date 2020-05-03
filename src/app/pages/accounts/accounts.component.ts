@@ -120,13 +120,14 @@ export class AccountsComponent implements OnInit {
       deleteAccount(id : String, accountName) {
         this.selectedAccount = {};
         this.displayDialog = false;
+        let accountId = id;
         const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
           width: '400px',
           data: "Are you sure you want to delete " + accountName + "?"
         });
         dialogRef.afterClosed().subscribe(result => {
           if(result) {
-            this.accountService.deleteAccount(id).subscribe(
+            this.accountService.deleteAccount(accountId).subscribe(
               data => {
                   this.getAllAccounts();
               },
@@ -229,7 +230,7 @@ export class AccountsComponent implements OnInit {
     this.newAccount = false;
     this.displayDialog = true;
   }
-  
+
   showAccount() {
     this.newAccount = false;
     this.displayDialog = true;
@@ -286,5 +287,10 @@ export class AccountsComponent implements OnInit {
       let id = ids[invId];
       this.account.countryNames.push(this.publicInformationService.getCountry(id).name);
     }
-}
+  }
+
+  onDialogHide(event) {
+    console.log("beforehide");
+    this.getAllAccounts();
+  }
 }

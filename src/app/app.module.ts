@@ -50,6 +50,7 @@ import { PickerComponent } from './components/picker/picker.component';
 import {ToastModule} from 'primeng/toast';
 import {MessageModule} from 'primeng/message';
 import {MessagesModule} from 'primeng/messages';
+import {CodeHighlighterModule} from 'primeng/codehighlighter';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import {MessagesModule} from 'primeng/messages';
     InputTextareaModule,
     ToastModule,
     MessageModule,
-    MessagesModule
+    MessagesModule,
+    CodeHighlighterModule
   ],
   providers: [
     {
