@@ -18,6 +18,20 @@
                 </i>
               </span> Accounts</a></li>
         </ul>
+        <ul class="menu-list">
+            <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a
+                [routerLink]="['/admin/matches']"><span class="icon is-small"><i class="fa fa-puzzle-piece"
+                    (click)="activePage='matches'">
+                  </i>
+                </span> Matches</a></li>
+          </ul>
+          <ul class="menu-list">
+            <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a
+                [routerLink]="['/admin/public']"><span class="icon is-small"><i class="fa fa-info"
+                    (click)="activePage='public'">
+                  </i>
+                </span> Public Information</a></li>
+          </ul>
       </nav>
 
     </aside>

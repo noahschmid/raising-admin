@@ -90,6 +90,10 @@ const routes: Routes = [{
         data:{
           breadcrumb:'Startup'
         }
+      },
+      {
+        path: '404',
+        component:PageNotFoundComponent
       }
     ]
   },
