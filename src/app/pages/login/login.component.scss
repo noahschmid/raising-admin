@@ -1,0 +1,85 @@
+.background {
+  height: 100%;
+  margin:0px;
+  padding:0px;
+  background-color: #343A40;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hoverable {
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  font-family: sans-serif;
+}
+
+.inputBox {
+  padding: 12px 20px;
+  margin: 8px 0;
+}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  outline: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+  -webkit-appearance: none;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  -webkit-appearance: none !important;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+}
+
+a, :visited{ 
+    outline: 0;
+    outline: none;
+}
+:hover, :active, :focus{
+    outline: 0;
+    outline: none !important;
+}
+
+h1 {
+  text-align: center;
+}
+
+.logo {
+  width:50em;
+  margin-left:auto;
+  margin-right:auto;
+  margin-bottom: 5em;
+  padding: none;
+}
+
+button {
+  background-color: #6B1318 !important;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  margin-top:10%;
+  width: 100% !important;
+  padding: 12px 20px !important;
+}
+
+.wrapper {
+  align-content: center;
+  align-items: center;
+  margin: none;
+}
+
+.login-form {
+  width:30em;
+  position: relative;
+  margin:auto;
+  padding: none;
+}

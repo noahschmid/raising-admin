@@ -1,0 +1,154 @@
+@import "~bulma-dracula/src/bulma-dracula.scss";
+
+$theme: rgb(145,27,32);
+$selected: rgb(151, 49, 55);
+$text: #f8f8f2;
+$cyan: #8be9fd;
+
+.nav-tag{
+  padding-right: 30px;
+}
+
+.is-fullheight.columns {
+    height: calc(100vh - ( 3.25rem - .75rem)  - 0.8em );
+}
+
+.fullheight {
+    min-height: calc(100vh - ( 3.25rem - 0.75rem)  - 0.8em );
+}
+
+.tag-notif{
+  border-radius: 50%;
+  position: absolute;
+  top: 5px;
+  margin-left: 10px;
+
+  @media (max-width: 768px) {
+    margin-left: -2px;
+  }
+}
+.column {
+    margin:none;
+    padding:none;
+}
+
+.hero{
+  background-color: $theme;
+}
+.navbar{
+  background: $theme;
+
+  &-item{
+    background-color: $theme;
+    color: $text !important;
+    &.is-active{
+      background-color: $selected !important;
+      color: $text !important;
+    }
+    &:hover {
+      background-color: $selected !important;
+      color: $text !important;
+    }
+  }
+
+  .is--brand{
+    &:hover {
+      background-color: $theme !important;
+    }
+  }
+
+  &-brand-logo{
+    max-height: 3rem !important;
+    background-color: $theme;
+    border-radius: .25em;
+    padding: .25em;
+  }
+
+  &-dropdown{
+    background-color: $theme;
+    .navbar-item{
+      background-color: $theme;
+    }
+  }
+
+  &-burger{
+    background-color: $theme !important;
+    border: 0;
+    span{
+      background-color: $cyan;
+    }
+  }
+
+  &-link{
+    color: $text;
+
+    figure{
+      img{
+        border-radius: 50%;
+        max-height: 2em;
+      }
+    }
+
+    &:hover{
+      background-color: $theme;
+    }
+  }
+}
+
+.message.is-dark{
+  .message-body{
+    background-color: lighten($theme, 5%);
+  }
+}
+
+@media screen and (min-width: 1088px) {
+  .navbar-item.has-dropdown:hover .navbar-link, .navbar-item.has-dropdown.is-active .navbar-link {
+    background-color: $theme;
+  }
+}
+
+// navigation left area
+.aside{
+    background: $theme;
+    padding: 2em .2em 0 1em;
+  
+    a{
+      color: $text;
+      padding-left:2em;
+    }
+  
+    .menu-list {
+      li {
+        margin-top: .5em;
+      }
+    }
+  }
+
+// main area
+.main-area{
+    background-color: #E4E5E6;
+    width:100%; 
+}
+
+.menu-label{
+  color: $cyan;
+  margin-left: .5em;
+}
+
+.block{
+  margin-top: .5em;
+}
+
+
+.middle {
+    margin-top: 0.9em;
+}
+
+.content {
+    padding: 2em 3em 0 3em;
+}
+
+.crumb {
+    margin:none !important;
+    margin-left:-2em !important;
+}

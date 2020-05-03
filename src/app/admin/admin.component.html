@@ -1,0 +1,33 @@
+<div class="header">
+  <app-header></app-header>
+</div>
+<div class="middle">
+  <div class="columns">
+    <aside class="column is-2 aside is-fullheight">
+      <nav class="menu is-fullheight">
+        <ul class="menu-list">
+          <li [class.active]="router.url==='/admin/dashboard'"><a [routerLink]="['/admin/dashboard']"
+              (click)="activePage='dashboard'">
+              <span class="icon is-small"><i class="fa fa-tachometer"></i></span>
+              Dashboard</a></li>
+        </ul>
+        <ul class="menu-list">
+          <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a
+              [routerLink]="['/admin/accounts']"><span class="icon is-small"><i class="fa fa-user-o"
+                  (click)="activePage='accounts'">
+                </i>
+              </span> Accounts</a></li>
+        </ul>
+      </nav>
+
+    </aside>
+    <div class="main-area">
+        <p-breadcrumb  home="Home" [model]="menuItems"></p-breadcrumb>
+      <div class="fullheight content">
+        <router-outlet>
+
+        </router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,101 @@
+.wrapper {
+    height: 100vh;
+    width:100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center ;
+  }
+
+  .bg-1 {
+    background-color: #63C2DE;
+  }
+
+  .bg-2 {
+    background-color: #20A8D8;
+  }
+
+  .bg-3 {
+    background-color: #FFC107;
+  }
+
+  .bg-4 {
+    background-color: #D34836;
+  }
+
+  @mixin rotate {
+    transform: rotate(15deg);
+  }
+
+  #wrapper {
+    display: flex;
+    #content-wrapper {
+      overflow-x: hidden;
+      width: 100%;
+      padding-top: 1rem;
+      padding-bottom: 80px;
+    }
+  }
+
+  // Additional Text Helper Class
+.smaller {
+  font-size: 0.7rem;
+}
+
+// Helper class for the overflow property
+.o-hidden {
+  overflow: hidden !important;
+}
+
+// Helper classes for z-index
+.z-0 {
+  z-index: 0;
+}
+
+.z-1 {
+  z-index: 1;
+}
+
+
+  // Styling for custom cards
+// Custom class for the background icon in card blocks
+.card-body-icon {
+  position: absolute;
+  z-index: 0;
+  top: -1.25rem;
+  right: -1rem;
+  opacity: 0.4;
+
+  font-size: 5rem;
+  @include rotate;
+}
+
+// Override breakpoints for card columns to work well with sidebar layout
+.card-columns {
+  @media (min-width: 576px) {
+    column-count: 1;
+  }
+  @media (min-width: 768px) {
+    column-count: 2;
+  }
+  @media (min-width: 1200px) {
+    column-count: 2;
+  }
+}
+
+.h-200 {
+  height:10em;
+}
+
+.number {
+  font-size: 2em;
+  background-color: transparent;
+}
+
+.description {
+  margin-top:0.2em;
+}
+
+.chart {
+  background-color: #FFFFFF;
+}

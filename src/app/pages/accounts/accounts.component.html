@@ -1,0 +1,71 @@
+<p-table #dt selectionMode="single" [(selection)]="selectedAccount" (onRowSelect)="onRowSelect($event)" [value]="accountList" [autoLayout]="true" [columns]="cols" [paginator]="true" [rows]="10"
+  [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+  <ng-template pTemplate="caption">
+    <div style="text-align: right">
+      <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+      <input type="text" pInputText size="50" placeholder="Global Filter"
+        (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="accountId">ID
+        <p-sortIcon field="accountId" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+          ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+      </th>
+      <th>picture</th>
+      <th pSortableColumn="firstName">First Name
+        <p-sortIcon field="firstName" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+          ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+      </th>
+      <th pSortableColumn="lastName">Last Name
+        <p-sortIcon field="lastName" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+          ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+      </th>
+      <th pSortableColumn="type">Type
+        <p-sortIcon field="type" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+          ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+      </th>
+      <th pSortableColumn="admin">Admin
+        <p-sortIcon field="admin" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+          ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+      </th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-acc let-columns="columns">
+    <tr [pSelectableRow]="acc">
+      <td (click)="showAccount()">{{ acc.accountId }} </td>
+      <td (click)="showAccount()">
+        <img class="circle-img" [src]="acc.profilePictureId > 0 ? endpointService.getUrl() + 'media/profilepicture/'
+                + acc.profilePictureId : 'assets/images/user.png'" />
+      </td>
+      <td (click)="showAccount()">{{ acc.firstName }}</td>
+      <td (click)="showAccount()">{{ acc.lastName }}</td>
+      <td (click)="showAccount()"> {{ acc.type }} </td>
+      <td (click)="showAccount()"> {{ acc.roles=='ROLE_ADMIN' ? "Yes" : "No" }} </td>
+      <td>
+        <span class="icon is-small clickable" [routerLink]="[acc.link, acc.accountId]">
+          <i class="fa fa-eye"></i>
+        </span>
+        <span class="icon is-small clickable" style="margin-left:0.5em"
+        (click)="editAccount()">
+          <i class="fa fa-edit"></i>
+        </span>
+        <span *ngIf="acc.roles!='ROLE_ADMIN' || acc.accountId == authService.getId()" class="icon is-small clickable" style="margin-left:0.5em" (click)="deleteAccount(account.accountId, 
+        acc.firstName + ' ' + acc.lastName + ' (id: ' + 
+        acc.accountId + ')')">
+          <i class="fa fa-trash-o"></i>
+        </span>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+  <p-dialog header="Account Details" [(visible)]="displayDialog" [focusOnShow]="false" [responsive]="true" 
+    showEffect="fade" [modal]="true"  [style]="{width: '50em'}">
+
+    <app-investor-account *ngIf="account.type=='Investor'" [investor]="account"></app-investor-account>
+    <app-startup-account *ngIf="account.type=='Startup'" [startup]="account"></app-startup-account>
+</p-dialog>

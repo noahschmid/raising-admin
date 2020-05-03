@@ -1,0 +1,182 @@
+$input-arrow: rgb(145,27,32);
+
+$navbar-box-shadow-color: #C8CED3;
+$navbar-box-shadow-size: 0 0.5px 0 0;
+
+@import "~bulma-dracula/src/bulma-dracula.scss";
+
+$theme: white;
+$selected: rgb(145,27,32);
+$text: #73818F;
+$cyan: #8be9fd;
+
+.navbar-link:after {
+    border-color: $text !important;
+  }
+
+.navbar-link:hover {
+    color:$selected;
+}
+
+.logo-item {
+    background: url("../../assets/images/logo.png") no-repeat center center;
+    background-size: cover;
+    width: 12em;
+  }
+
+.circle-img {
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    overflow: hidden;
+    object-fit: cover;
+ }
+
+ .slider-text {
+     color:$text !important;
+     margin-left:0.5em;
+ }
+
+
+ .server-toggle {
+     color:$selected !important;
+     background-color: $selected !important;
+ }
+
+.nav-tag{
+    padding-right: 30px;
+  }
+  .tag-notif{
+    border-radius: 50%;
+    position: absolute;
+    top: 5px;
+    margin-left: 10px;
+  
+    @media (max-width: 768px) {
+      margin-left: -2px;
+    }
+  }
+  .hero{
+    background-color: $theme;
+  }
+
+  .ui-inputswitch.server-toggle {
+    background-color: $selected !important;
+
+    &:active {
+        background-color: $selected !important;
+    }
+  }
+
+  .p-inputSwitch.server-toggle {
+    background-color:$selected !important;
+  }
+
+  .logo {
+      color:rgb(145,27,32) !important;
+  }
+
+  .navbar{
+    background: $theme;
+  
+    &-item{
+      background-color: $theme;
+      color: $text !important;
+      &.is-active{
+        background-color: $selected !important;
+        color: $text !important;
+      }
+      &:hover {
+        background-color: $theme !important;
+        color: $selected !important;
+      }
+    }
+  
+    .is--brand{
+      &:hover {
+        background-color: $theme !important;
+      }
+    }
+  
+    &-brand-logo{
+      max-height: 3rem !important;
+      background-color: $theme;
+      border-radius: .25em;
+      padding: .25em;
+    }
+  
+    &-dropdown{
+      background-color: $theme;
+      .navbar-item{
+        background-color: $theme;
+      }
+    }
+  
+    &-burger{
+      background-color: $theme !important;
+      border: 0;
+      span{
+        background-color: $cyan;
+      }
+    }
+  
+    &-link{
+      color: $text;
+  
+      figure{
+        img{
+          border-radius: 50%;
+          max-height: 2em;
+        }
+      }
+  
+      &:hover{
+        background-color: $theme;
+      }
+    }
+  }
+  
+  .message.is-dark{
+    .message-body{
+      background-color: lighten($theme, 5%);
+    }
+  }
+  
+  .breadcrumb:not(:last-child){
+    margin-bottom: 0;
+  }
+  
+  @media screen and (min-width: 1088px) {
+    .navbar-item.has-dropdown:hover .navbar-link, .navbar-item.has-dropdown.is-active .navbar-link {
+      background-color: $theme;
+    }
+  }
+  // navigation left area
+  .aside{
+    background: $theme;
+    padding: 2em .2em 0 1em;
+  
+    a{
+      color: $text;
+    }
+  
+    .menu-list {
+      li {
+        margin-top: .5em;
+      }
+    }
+  }
+  
+  // main area
+  .main{
+    padding: 2em 2em 0 2em;
+  }
+  
+  .menu-label{
+    color: $cyan;
+    margin-left: .5em;
+  }
+  
+  .block{
+    margin-top: .5em;
+  }

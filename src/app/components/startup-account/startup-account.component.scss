@@ -1,0 +1,49 @@
+.circle-img {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    display: flex;
+    margin:auto;
+ }
+
+ .center-info {
+     margin-top: 1em;
+     align-items: center;
+     align-content: center;
+     text-align: center;
+ }
+
+ .title {
+    font-size: 2em;
+ }
+
+ .ui-button.red-button {
+    background-color: #911B20;
+    width:1.5em;
+    height:1.5em;
+
+    &:active {
+        background-color: #911B20;
+    }
+
+    &:hover {
+        background-color: rgb(121, 23, 28);
+    }
+ }
+
+ .ui-button.blue-button {
+    background-color: #007AD9;
+    width:1.5em;
+    height:1.5em;
+
+    &:active {
+        background-color: #007AD9;
+    }
+
+    &:hover {
+        background-color: rgb(3, 109, 190);
+    }
+ }
+
+
+  

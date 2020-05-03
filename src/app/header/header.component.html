@@ -1,0 +1,44 @@
+<header class="hero">
+  <nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a class="navbar-item logo-item" href="">
+      </a>
+    </div>
+
+    <div class="navbar-menu navbar-end" id="navMenu">
+      <div class="navbar-item">
+        <p-inputSwitch styleClass="server-toggle" (onChange)="toggleServerMode()" *ngIf="endpointService.showSlider()" [(ngModel)]="prodMode"></p-inputSwitch>
+        <div class="slider-text">{{ !prodMode ? "Dev Server" : "Prod Server"}}</div>
+      </div>
+      <!--
+          <span class="icon is-small">
+            <i class="fa fa-envelope-o"></i>
+          </span>
+          <span class="tag is-primary tag-notif">6</span>-->
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          <figure class="is-32x32" style="margin-right:.5em;">
+            <img [src]="pictureLink" class="circle-img">
+          </figure>
+          {{username}}
+        </a>
+
+        <div class="navbar-dropdown is-right" [routerLink]="['/admin/account', accountId]">
+          <a class="navbar-item">
+            <span class="icon is-small">
+              <i class="fa fa-user-o"></i>
+            </span>
+            &nbsp; Profile
+          </a>
+          <hr class="navbar-divider">
+          <a class="navbar-item" (click)="logout()">
+            <span class="icon is-small">
+              <i class="fa fa-power-off"></i>
+            </span>
+            &nbsp; Logout
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

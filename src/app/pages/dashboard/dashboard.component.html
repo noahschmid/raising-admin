@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="col-xl-2 col-sm-6 mb-2 offset-3">
+    <div class="card text-white bg-1 o-hidden h-200">
+      <div class="card-body">
+        <div class="card-body-icon">
+          <i class="fa fa-fw fa-user"></i>
+        </div>
+        <div class="number">{{ investorList.length }} </div>
+        <div class="description">Investors registered </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-2 col-sm-6 mb-3">
+    <div class="card text-white bg-2 o-hidden h-200">
+      <div class="card-body">
+        <div class="card-body-icon">
+          <i class="fa fa-fw fa-industry"></i>
+        </div>
+        <div class="number">{{ startupList.length }}</div>
+        <div class="description">Startups registered</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-2 col-sm-6 mb-3">
+    <div class="card text-white bg-4 o-hidden h-200">
+      <div class="card-body">
+        <div class="card-body-icon">
+          <i class="fa fa-fw fa-handshake-o"></i>
+        </div>
+        <div class="number">{{ handshakes.length }}</div>
+        <div class="description">Handshakes established</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" style="margin-top:2em">
+<div class="card col-xl-8 offset-2">
+    <div class="chart">
+        <p-chart type="bar" [data]="data"></p-chart>
+    </div>
+  </div>
+</div>
