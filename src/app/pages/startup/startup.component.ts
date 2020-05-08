@@ -1,8 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { AccountService } from 'src/app/services/account-service/account.service';
-import { ActivatedRoute } from '@angular/router';
-import { StartupAccountComponent } from 'src/app/components/startup-account/startup-account.component';
-import { PublicInformationService } from 'src/app/services/public-information-service/public-information.service';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  AccountService
+} from 'src/app/services/account-service/account.service';
+import {
+  ActivatedRoute
+} from '@angular/router';
+import {
+  StartupAccountComponent
+} from 'src/app/components/startup-account/startup-account.component';
+import {
+  PublicInformationService
+} from 'src/app/services/public-information-service/public-information.service';
 
 @Component({
   selector: 'app-startup',
@@ -11,23 +22,24 @@ import { PublicInformationService } from 'src/app/services/public-information-se
 })
 export class StartupComponent implements OnInit {
 
-  constructor(private accountService : AccountService,
+  constructor(private accountService: AccountService,
     private publicInformationService: PublicInformationService,
-    private route : ActivatedRoute) { }
+    private route: ActivatedRoute) {}
   startup: any;
   id: number;
   private sub: any;
 
   ngOnInit(): void {
     this.publicInformationService.hasLoaded.subscribe(loaded => {
-      if(loaded) {
-        if(!this.startup) {
+      if (loaded) {
+        if (!this.startup) {
           this.loadStartup();
-          this.populateNames
+          this.populateStartup();
         } else {
-          this.populateNames();
+          this.populateStartup();
         }
       } else {
+        this.publicInformationService.loadFromBackend();
         this.loadStartup();
       }
     })
@@ -41,63 +53,93 @@ export class StartupComponent implements OnInit {
 
         console.log(this.startup);
       })
-   });
+    });
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
-  populateNames() {
+  populateStartup() {
     let ids = [];
     this.startup.country = this.publicInformationService.getCountry(this.startup.countryId).name;
-    if(this.startup.type=='Investor') {
-      this.startup.investorType = this.publicInformationService.getInvestorType(this.startup.investorTypeId).name;
-      ids = this.startup.investmentPhases;
-      this.startup.investmentPhaseNames = [];
-      for(let invId in ids) {
-        let id = ids[invId];
-        this.startup.investmentPhaseNames.push(this.publicInformationService.getInvestmentPhase(id).name);
-      }
-    } else if(this.startup.type=='Startup') {
-      this.startup.investmentPhase = this.publicInformationService.getInvestmentPhase(this.startup.investmentPhaseId).name;
-      ids = this.startup.investorTypes;
-      this.startup.investorTypeNames = [];
-      for(let invId in ids) {
-        let id = ids[invId];
-        this.startup.investorTypeNames.push(this.publicInformationService.getInvestorType(id).name);
-      }
+
+    this.startup.investmentPhase = this.publicInformationService.getInvestmentPhase(this.startup.investmentPhaseId).name;
+    ids = this.startup.investorTypes;
+    this.startup.investorTypeObj = [];
+    for (let invId in ids) {
+      let id = ids[invId];
+      this.startup.investorTypeObj.push(this.publicInformationService.getInvestorType(id));
     }
-    
+
     this.startup.ticketMin = this.publicInformationService.getTicketSize(this.startup.ticketMinId).name;
     this.startup.ticketMax = this.publicInformationService.getTicketSize(this.startup.ticketMaxId).name;
 
+    this.startup.financeType = this.publicInformationService.getFinanceType(this.startup.financeTypeId).name;
+
+    this.startup.ticketRange = [];
+
+    this.startup.ticketSizes = this.publicInformationService.getTicketSizes();
+
+    for (let i = 0; i < this.startup.ticketSizes.length; ++i) {
+      if (this.startup.ticketSizes[i].id == this.startup.ticketMinId) {
+        this.startup.ticketRange.push(i);
+      }
+      if (this.startup.ticketSizes[i].id == this.startup.ticketMaxId) {
+        this.startup.ticketRange.push(i);
+        break;
+      }
+    }
+
+    this.startup.revenueMin = this.publicInformationService.getRevenue(this.startup.revenueMinId).name;
+    this.startup.revenueMax = this.publicInformationService.getRevenue(this.startup.revenueMaxId).name;
+    this.startup.revenueRange = [];
+
+    this.startup.revenue = this.publicInformationService.getRevenues();
+
+    for (let i = 0; i < this.startup.revenue.length; ++i) {
+      if (this.startup.ticketSizes[i].id == this.startup.revenueMinId) {
+        this.startup.revenueRange.push(i);
+      }
+      if (this.startup.ticketSizes[i].id == this.startup.revenueMaxId) {
+        this.startup.revenueRange.push(i);
+        break;
+      }
+    }
+
     ids = this.startup.support;
-    this.startup.supportNames = [];
-    for(let invId in ids) {
+    this.startup.supportObj = [];
+    for (let invId in ids) {
       let id = ids[invId];
-      this.startup.supportNames.push(this.publicInformationService.getSupport(id).name);
+      this.startup.supportObj.push(this.publicInformationService.getSupport(id));
     }
 
     ids = this.startup.continents;
-    this.startup.continentNames = [];
-    for(let invId in ids) {
+    this.startup.continentObj = [];
+    for (let invId in ids) {
       let id = ids[invId];
-      this.startup.continentNames.push(this.publicInformationService.getContinent(id).name);
+      this.startup.continentObj.push(this.publicInformationService.getContinent(id));
     }
 
     ids = this.startup.industries;
-    this.startup.industryNames = [];
-    for(let invId in ids) {
+    this.startup.industryObj = [];
+    for (let invId in ids) {
       let id = ids[invId];
-      this.startup.industryNames.push(this.publicInformationService.getIndustry(id).name);
+      this.startup.industryObj.push(this.publicInformationService.getIndustry(id));
     }
 
     ids = this.startup.countries;
-    this.startup.countryNames = [];
-    for(let invId in ids) {
+    this.startup.countryObj = [];
+    for (let invId in ids) {
       let id = ids[invId];
-      this.startup.countryNames.push(this.publicInformationService.getCountry(id).name);
+      this.startup.countryObj.push(this.publicInformationService.getCountry(id));
     }
-}
+
+    ids = this.startup.labels;
+    this.startup.labelObj = [];
+    for (let invId in ids) {
+      let id = ids[invId];
+      this.startup.labelObj.push(this.publicInformationService.getLabel(id));
+    }
+  }
 }

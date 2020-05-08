@@ -1,1 +1,4 @@
-<p>picker works!</p>
+
+<div class="item" *ngFor="let item of items" (click)="selectItem(item)">
+    {{ item.name }}
+</div>

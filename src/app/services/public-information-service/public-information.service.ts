@@ -17,6 +17,9 @@ export class PublicInformationService {
   private industries = [];
   private corporateBodies = [];
   private support = [];
+  private labels = [];
+  private financeTypes = [];
+  private revenue = [];
 
   private loaded = false;
 
@@ -39,6 +42,9 @@ export class PublicInformationService {
         this.corporateBodies = (data as any).corporateBodies;
         this.industries = (data as any).industries;
         this.support = (data as any).support;
+        this.labels = (data as any).labels;
+        this.revenue = (data as any).revenues;
+        this.financeTypes = (data as any).financeTypes;
 
         this.loaded = true;
         observer.next(true);
@@ -60,6 +66,9 @@ export class PublicInformationService {
       this.corporateBodies = (data as any).corporateBodies;
       this.industries = (data as any).industries;
       this.support = (data as any).support;
+      this.financeTypes = (data as any).financeTypes;
+      this.revenue = (data as any).revenues;
+      this.labels = (data as any).labels;
 
       this.loaded = true;
     });
@@ -70,6 +79,12 @@ export class PublicInformationService {
   getTicketSizes() { return this.ticketSizes; }
   getInvestorTypes() { return this.investorTypes; }
   getInvestmentPhases() { return this.investmentPhases; }
+  getSupports() { return this.support; }
+  getLabels() { return this.labels; }
+  getCorporateBodies() { return this.corporateBodies; }
+  getIndustries() { return this.industries; }
+  getFinanceTypes() { return this.financeTypes; }
+  getRevenues() { return this.revenue; }
 
   getCountry(id) {
     return this.getCountries().find((country) => {
@@ -83,19 +98,28 @@ export class PublicInformationService {
     });
   }
 
+  getRevenue(id) {
+    return this.getRevenues().find((rv) => {
+      return rv.id == id;
+    });
+  }
+
   getInvestorType(id) {
     return this.investorTypes.find((type) => {
       return type.id == id;
     });
   }
 
+  getLabel(id) {
+    return this.labels.find((type) => {
+      return type.id == id;
+    });
+  }
+
   getTicketSize(id) {
-    console.log("searching for id " + id);
     let size =  this.ticketSizes.find((ticket) => {
       return ticket.id == id;
     });
-
-    console.log(size);
     return size;
   }
 
@@ -105,13 +129,7 @@ export class PublicInformationService {
     });
   }
 
-  getIndustries(id) {
-    return this.industries.find((industry) => {
-      return industry.id == id;
-    });
-  }
-
-  getCorporateBodies(id) {
+  getCorporateBody(id) {
     return this.corporateBodies.find((body) => {
       return body.id == id;
     });
@@ -126,6 +144,12 @@ export class PublicInformationService {
   getSupport(id) {
     return this.support.find((support) => {
       return support.id == id;
+    });
+  }
+
+  getFinanceType(id) {
+    return this.financeTypes.find((type) => {
+      return type.id == id;
     });
   }
 }

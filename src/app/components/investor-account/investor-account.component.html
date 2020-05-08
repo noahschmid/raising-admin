@@ -1,5 +1,10 @@
 <div *ngIf="investor != null" class="container">
-    <p-toast></p-toast>
+  <p-toast></p-toast>
+  <div style="align-items:left; align-content:left; text-align:left">
+    <img *ngIf="investor.roles=='ROLE_ADMIN'" class="circle-img-sm" src="/assets/images/admin.png" />
+    <button pButton type="button" class="admin-button" icon="pi pi-user-plus" label="Make Admin" (click)="makeAdmin()"
+      *ngIf="investor.roles!='ROLE_ADMIN'"></button>
+  </div>
   <div style="align-items: right; align-content:right; text-align:right">
     <button pButton type="button" class="blue-button" (click)="toggleEdit()"
       [icon]="editMode ? 'pi pi-save' : 'pi pi-pencil'"></button>
@@ -10,43 +15,105 @@
   <div class="center-info">
 
     <b class="title" *ngIf="!editMode">{{ investor.firstName }} {{ investor.lastName }}</b>
-    <input *ngIf="editMode" pInputText id="firstName" [(ngModel)]="investor.firstName" /> <input *ngIf="editMode" pInputText
-      id="lastName" [(ngModel)]="investor.lastName" />
-    <ul style="list-style-type:none">
-      <li><b> Country</b></li>
-      <li> {{ investor.country }}&nbsp;
-        <button *ngIf="editMode" pButton class="blue-button" icon="pi pi-pencil"></button>
-      </li>
+    <input *ngIf="editMode" pInputText id="firstName" [(ngModel)]="investor.firstName" /> <input *ngIf="editMode"
+      pInputText id="lastName" [(ngModel)]="investor.lastName" />
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td style="width:20em"><b> Country</b></td>
+        <td>{{ investor.country }}&nbsp;
+          <button *ngIf="editMode" pButton class="blue-button" icon="pi pi-pencil" (click)="changeCountry()"></button>
+        </td>
+      </tr>
+      <tr>
+        <td><b> Investor Type</b></td>
+        <td>
+          {{ investor.investorType }}&nbsp;
+          <button *ngIf="editMode" pButton class="blue-button" icon="pi pi-pencil"
+            (click)="changeInvestorType()"></button>
+        </td>
+      </tr>
 
-      <li><b>Description</b></li>
-      <li *ngIf="!editMode"> {{ investor.description }} </li>
-      <textarea [rows]="2" [cols]="50" *ngIf="editMode" pInputText id="description" [(ngModel)]="investor.description" ></textarea>
-      <li><b>Pitch</b></li>
-      <li *ngIf="!editMode"> {{ investor.pitch }} </li>
-      <textarea [rows]="10" [cols]="50" *ngIf="editMode" pInputTextarea id="pitch" [(ngModel)]="investor.pitch" ></textarea>
-      <li><b>Ticket Size</b></li>
-      <li> {{ investor.ticketMin }} - {{ investor.ticketMax }}</li>
-      <li><b>Involvement</b></li>
-      <ul style="list-style-type:none">
-        <li *ngFor="let spprt of investor.supportNames"> {{ spprt }} &nbsp;
-          <button *ngIf="editMode" type="button" class="red-button" pButton icon="pi pi-times"></button>
-        </li>
-        <li *ngIf="editMode"><button type="button" class="blue-button" pButton icon="pi pi-plus"></button></li>
-      </ul>
-      <li><b>Industries</b></li>
-      <ul style="list-style-type:none;">
-        <li *ngFor="let indstry of investor.industryNames"> {{ indstry }}&nbsp;
-          <button *ngIf="editMode" type="button" class="red-button" pButton icon="pi pi-times"></button>
-        </li>
-        <li *ngIf="editMode"><button type="button" class="blue-button" pButton icon="pi pi-plus"></button></li>
-      </ul>
-      <li><b>Investment Phases</b></li>
-      <ul style="list-style-type:none;">
-        <li *ngFor="let phase of investor.investmentPhaseNames"> {{ phase }}&nbsp;
-          <button *ngIf="editMode" type="button" class="red-button" pButton icon="pi pi-times"></button>
-        </li>
-        <li *ngIf="editMode"><button type="button" class="blue-button" pButton icon="pi pi-plus"></button></li>
-      </ul>
-    </ul>
+      <tr>
+        <td><b>Description</b></td>
+        <td><span *ngIf="!editMode"> {{ investor.description }} </span>
+          <textarea [rows]="2" [cols]="50" *ngIf="editMode" pInputText id="description"
+            [(ngModel)]="investor.description"></textarea></td>
+      </tr>
+
+      <tr>
+        <td><b>Pitch</b></td>
+        <td><span *ngIf="!editMode"> {{ investor.pitch }} </span>
+          <textarea [rows]="10" [cols]="50" *ngIf="editMode" pInputTextarea id="pitch"
+            [(ngModel)]="investor.pitch"></textarea>
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Ticket Size</b></td>
+        <td><span>{{ formatTicketSize(investor.ticketMin) }} - {{ formatTicketSize(investor.ticketMax) }}</span>
+          <p-slider *ngIf="editMode" [(ngModel)]="investor.ticketRange" [step]="1" [min]="0"
+            [max]="investor.ticketSizes.length - 1" (onChange)="handleSliderChange($event)" [range]="true"></p-slider>
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Involvement</b></td>
+        <td>
+          <span *ngFor="let spprt of investor.supportObj"> {{ spprt.name }} &nbsp;
+            <button *ngIf="editMode" type="button" class="red-button" pButton icon="pi pi-times"
+              (click)="deleteInvolvement(spprt.id)"></button>
+            <br>
+          </span>
+          <span *ngIf="editMode"><button type="button" class="blue-button" pButton icon="pi pi-plus"
+              (click)="addInvolvement()"></button></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Industries</b></td>
+        <td>
+          <span *ngFor="let indstry of investor.industryObj"> {{ indstry.name }}&nbsp;
+            <button *ngIf="editMode" type="button" class="red-button" pButton icon="pi pi-times"
+              (click)="deleteIndustry(indstry.id)"></button>
+            <br />
+          </span>
+          <span *ngIf="editMode"><button type="button" class="blue-button" pButton icon="pi pi-plus"
+              (click)="addIndustry()"></button></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Investment Phases</b></td>
+        <td> <span *ngFor="let phase of investor.investmentPhaseObj"> {{ phase.name }}&nbsp;
+            <button *ngIf="editMode" type="button" class="red-button" pButton icon="pi pi-times"
+              (click)="deleteInvestmentPhase(phase.id)"></button><br>
+          </span>
+          <span *ngIf="editMode"><button type="button" class="blue-button" pButton icon="pi pi-plus"
+              (click)="addInvestmentPhase()"></button></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Continents</b></td>
+        <td> <span *ngFor="let cntnt of investor.continentObj"> {{ cntnt.name }}&nbsp;
+            <button *ngIf="editMode" type="button" class="red-button" pButton icon="pi pi-times"
+              (click)="deleteContinent(cntnt.id)"></button><br>
+          </span>
+          <span *ngIf="editMode"><button type="button" class="blue-button" pButton icon="pi pi-plus"
+              (click)="addContinent()"></button></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Countries</b></td>
+        <td> <span *ngFor="let cntry of investor.countryObj"> {{ cntry.name }}&nbsp;
+            <button *ngIf="editMode" type="button" class="red-button" pButton icon="pi pi-times"
+              (click)="deleteCountry(cntry.id)"></button><br>
+          </span>
+          <span *ngIf="editMode"><button type="button" class="blue-button" pButton icon="pi pi-plus"
+              (click)="addCountry()"></button></span>
+        </td>
+      </tr>
+    </table>
   </div>
 </div>

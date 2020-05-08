@@ -46,4 +46,38 @@
  }
 
 
-  
+
+ .ui-button.admin-button {
+    background-color: #007AD9;
+
+    &:active {
+        background-color: #007AD9;
+    }
+
+    &:hover {
+        background-color: rgb(3, 109, 190);
+    }
+ }
+
+ .circle-img-sm {
+    height: 32px;
+    width: 32px;
+    border: 1px solid black;
+    border-radius: 50%;
+    overflow: hidden;
+    object-fit: cover;
+ }
+
+ td {
+     text-align:left;
+     border:none;
+ }
+
+ tr {
+     border:none;
+
+ }
+ table {
+     border-collapse:collapse !important;
+     border:none !important;
+}

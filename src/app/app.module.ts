@@ -51,6 +51,8 @@ import {ToastModule} from 'primeng/toast';
 import {MessageModule} from 'primeng/message';
 import {MessagesModule} from 'primeng/messages';
 import {CodeHighlighterModule} from 'primeng/codehighlighter';
+import {DataViewModule} from 'primeng/dataview';
+import {SliderModule} from 'primeng/slider';
 
 @NgModule({
   declarations: [
@@ -95,7 +97,9 @@ import {CodeHighlighterModule} from 'primeng/codehighlighter';
     ToastModule,
     MessageModule,
     MessagesModule,
-    CodeHighlighterModule
+    CodeHighlighterModule,
+    DataViewModule,
+    SliderModule
   ],
   providers: [
     {

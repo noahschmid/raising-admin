@@ -61,4 +61,18 @@ export class AccountService {
       delete account.password;
       return this.httpClient.patch(this.EndpointService.getUrl() + "account/" + account.accountId, account);
     }
+
+    addAssignment(accountId : number, table : string, id, accountType : string) {
+      let params = [];
+      params.push(id);
+      return this.httpClient.post(this.EndpointService.getUrl() + accountType + "/" + accountId + "/" + table,
+      params);
+    }
+
+    deleteAssignment(accountId : number, table : string, id, accountType : string) {
+      let params = [];
+      params.push(id);
+      return this.httpClient.post(this.EndpointService.getUrl() + accountType + "/" + accountId + "/" + table + 
+      "/delete", JSON.stringify(params));
+    }
   }

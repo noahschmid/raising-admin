@@ -1,5 +1,10 @@
 <div *ngIf="startup != null" class="container">
-    <p-toast></p-toast>
+  <p-toast></p-toast>
+  <div style="align-items:left; align-content:left; text-align:left">
+    <img *ngIf="startup.roles=='ROLE_ADMIN'" class="circle-img-sm" src="/assets/images/admin.png" />
+    <button pButton type="button" class="admin-button" icon="pi pi-user-plus" label="Make Admin" (click)="makeAdmin()"
+      *ngIf="startup.roles!='ROLE_ADMIN'"></button>
+  </div>
   <div style="align-items: right; align-content:right; text-align:right">
     <button pButton type="button" class="blue-button" (click)="toggleEdit()"
       [icon]="editMode ? 'pi pi-save' : 'pi pi-pencil'"></button>
@@ -9,54 +14,196 @@
                   + startup.profilePictureId : 'assets/images/user.png'" />
   <div class="center-info">
 
-    <b class="title" *ngIf="!editMode">{{ startup.companyName }}</b>
-    <input *ngIf="editMode" pInputText id="firstName" [(ngModel)]="startup.companyName" />
-    <ul style="list-style-type:none">
-      <li><b>Contact Name</b></li>
-      <li *ngIf="!editMode">{{ startup.firstName }} {{ startup.lastName }} </li>
-      <input *ngIf="editMode" pInputText id="firstName" [(ngModel)]="startup.firstName" /> <input *ngIf="editMode" pInputText
-      id="lastName" [value]="startup.lastName" />
-      <li><b> Country</b></li>
-      <li> {{ startup.country }}&nbsp;
-        <button *ngIf="editMode" pButton class="blue-button" icon="pi pi-pencil"></button>
-      </li>
+    <b class="title" *ngIf="!editMode">{{ startup.companyName }} </b>
+    <input *ngIf="editMode" pInputText id="companyName" [(ngModel)]="startup.companyName" />
+    <table cellspacing="0" cellpadding="0">
+      <tr>
+        <td><b>UID</b></td>
+        <td><span *ngIf="!editMode"> {{ startup.uid }} </span>
+          <input  *ngIf="editMode" pInput id="scope" [(ngModel)]="startup.uid" />
+        </td>
+      </tr>
+      <tr>
+        <td><b>Contact Name</b></td>
+        <td>
+          <span *ngIf="!editMode">{{ startup.firstName }} {{ startup.lastName }}</span>
+          <input *ngIf="editMode" pInputText id="firstName" [(ngModel)]="startup.firstName" /> 
+          <input *ngIf="editMode" pInputText id="lastName" [(ngModel)]="startup.lastName" />
+        </td>
+      </tr>
+      <tr>
+        <td style="width:20em"><b> Country</b></td>
+        <td>{{ startup.country }}&nbsp;
+          <button *ngIf="editMode" pButton class="blue-button" icon="pi pi-pencil" (click)="changeCountry()"></button>
+        </td>
+      </tr>
+      <tr>
+        <td><b> Investment Phase</b></td>
+        <td>
+          {{ startup.investmentPhase }}&nbsp;
+          <button *ngIf="editMode" pButton class="blue-button" icon="pi pi-pencil"
+            (click)="changeInvestmentPhase()"></button>
+        </td>
+      </tr>
 
-      <li><b>Description</b></li>
-      <li *ngIf="!editMode"> {{ startup.description }} </li>
-      <textarea [rows]="2" [cols]="50" *ngIf="editMode" pInputText id="description" [(ngModel)]="startup.description" ></textarea>
-      
-      <li><b>Pitch</b></li>
-      <li *ngIf="!editMode"> {{ startup.pitch }} </li>
-      <textarea [rows]="10" [cols]="50" *ngIf="editMode" pInputTextarea id="pitch" [(ngModel)]="startup.pitch" ></textarea>
+      <tr>
+        <td><b>Description</b></td>
+        <td><span *ngIf="!editMode"> {{ startup.description }} </span>
+          <textarea [rows]="2" [cols]="50" *ngIf="editMode" pInputText id="description"
+            [(ngModel)]="startup.description"></textarea></td>
+      </tr>
 
-      <li><b>Investment Phase</b></li>
-      <li *ngIf="!editMode"> {{ startup.investmentPhase }} </li>
-      <button *ngIf="editMode" pButton class="blue-button" icon="pi pi-pencil"></button>
-      
-      <li><b>Ticket Size</b></li>
-      <li> {{ startup.ticketMin }} - {{ startup.ticketMax }}</li>
-      
-      <li><b>Involvement</b></li>
-      <ul style="list-style-type:none">
-        <li *ngFor="let spprt of startup.supportNames"> {{ spprt }} &nbsp;
-          <button *ngIf="editMode" type="button" class="red-button" pButton icon="pi pi-times"></button>
-        </li>
-        <li *ngIf="editMode"><button type="button" class="blue-button" pButton icon="pi pi-plus"></button></li>
-      </ul>
-      <li><b>Industries</b></li>
-      <ul style="list-style-type:none;">
-        <li *ngFor="let indstry of startup.industryNames"> {{ indstry }}&nbsp;
-          <button *ngIf="editMode" type="button" class="red-button" pButton icon="pi pi-times"></button>
-        </li>
-        <li *ngIf="editMode"><button type="button" class="blue-button" pButton icon="pi pi-plus"></button></li>
-      </ul>
-      <li><b>Investor Types</b></li>
-      <ul style="list-style-type:none;">
-        <li *ngFor="let type of startup.investorTypeNames"> {{ type }}&nbsp;
-          <button *ngIf="editMode" type="button" class="red-button" pButton icon="pi pi-times"></button>
-        </li>
-        <li *ngIf="editMode"><button type="button" class="blue-button" pButton icon="pi pi-plus"></button></li>
-      </ul>
-    </ul>
+      <tr>
+        <td><b>Pitch</b></td>
+        <td><span *ngIf="!editMode"> {{ startup.pitch }} </span>
+          <textarea [rows]="10" [cols]="50" *ngIf="editMode" pInputTextarea id="pitch"
+            [(ngModel)]="startup.pitch"></textarea>
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Ticket Size</b></td>
+        <td><span>{{ formatTicketSize(startup.ticketMin) }} - {{ formatTicketSize(startup.ticketMax) }}</span>
+          <p-slider *ngIf="editMode" [(ngModel)]="startup.ticketRange" [step]="1" [min]="0"
+            [max]="startup.ticketSizes.length - 1" (onChange)="handleSliderChange($event)" [range]="true"></p-slider>
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Founding Year</b></td>
+        <td><span *ngIf="!editMode"> {{ startup.foundingYear }} </span>
+          <input  *ngIf="editMode" pInput id="foundingYear" [(ngModel)]="startup.foundingYear" />
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Break Even Year</b></td>
+        <td><span *ngIf="!editMode"> {{ startup.breakEvenYear }} </span>
+          <input  *ngIf="editMode" pInput id="breakEvenYear" [(ngModel)]="startup.breakEvenYear" />
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Pre Money Valuation</b></td>
+        <td><span *ngIf="!editMode"> {{ startup.preMoneyValuation }} </span>
+          <input  *ngIf="editMode" pInput id="preMoneyValuation" [(ngModel)]="startup.preMoneyValuation" />
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Revenue</b></td>
+        <td><span> {{ formatRevenue(startup.revenueMin) }} - {{ formatRevenue(startup.revenueMax) }} </span>
+          <p-slider *ngIf="editMode" [(ngModel)]="startup.revenueRange" [step]="1" [min]="0"
+            [max]="startup.revenue.length - 1" (onChange)="handleRevenueChange($event)" [range]="true"></p-slider>
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Closing Time</b></td>
+        <td><span *ngIf="!editMode"> {{ startup.closingTime }} </span>
+          <input  *ngIf="editMode" pInput id="closingTime" [(ngModel)]="startup.closingTime" />
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Scope</b></td>
+        <td><span *ngIf="!editMode"> {{ startup.scope }} </span>
+          <input  *ngIf="editMode" pInput id="scope" [(ngModel)]="startup.scope" />
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Completed</b></td>
+        <td><span *ngIf="!editMode"> {{ startup.raised }} </span>
+          <input  *ngIf="editMode" pInput id="raised" [(ngModel)]="startup.raised" />
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Finance Type</b></td>
+        <td><span> {{ startup.financeType }} </span>
+          <button *ngIf="editMode" pButton class="blue-button" icon="pi pi-pencil"
+            (click)="changeFinanceType()"></button>
+        </td>
+      </tr>
+
+
+      <tr>
+        <td><b>FTE</b></td>
+        <td><span *ngIf="!editMode"> {{ startup.numberOfFte }} </span>
+          <input  *ngIf="editMode" pInput id="numberOfFte" [(ngModel)]="startup.numberOfFte" />
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Involvement</b></td>
+        <td>
+          <span *ngFor="let spprt of startup.supportObj"> {{ spprt.name }} &nbsp;
+            <button *ngIf="editMode" type="button" class="red-button" pButton icon="pi pi-times"
+              (click)="deleteInvolvement(spprt.id)"></button>
+            <br>
+          </span>
+          <span *ngIf="editMode"><button type="button" class="blue-button" pButton icon="pi pi-plus"
+              (click)="addInvolvement()"></button></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Industries</b></td>
+        <td>
+          <span *ngFor="let indstry of startup.industryObj"> {{ indstry.name }}&nbsp;
+            <button *ngIf="editMode" type="button" class="red-button" pButton icon="pi pi-times"
+              (click)="deleteIndustry(indstry.id)"></button>
+            <br />
+          </span>
+          <span *ngIf="editMode"><button type="button" class="blue-button" pButton icon="pi pi-plus"
+              (click)="addIndustry()"></button></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Investor Types</b></td>
+        <td> <span *ngFor="let type of startup.investorTypeObj"> {{ type.name }}&nbsp;
+            <button *ngIf="editMode" type="button" class="red-button" pButton icon="pi pi-times"
+              (click)="deleteInvestorType(type.id)"></button><br>
+          </span>
+          <span *ngIf="editMode"><button type="button" class="blue-button" pButton icon="pi pi-plus"
+              (click)="addInvestorType()"></button></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Labels</b></td>
+        <td> <span *ngFor="let lbl of startup.labelObj"> {{ lbl.name }}&nbsp;
+            <button *ngIf="editMode" type="button" class="red-button" pButton icon="pi pi-times"
+              (click)="deleteLabel(lbl.id)"></button><br>
+          </span>
+          <span *ngIf="editMode"><button type="button" class="blue-button" pButton icon="pi pi-plus"
+              (click)="addLabel()"></button></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Continents</b></td>
+        <td> <span *ngFor="let cntnt of startup.continentObj"> {{ cntnt.name }}&nbsp;
+            <button *ngIf="editMode" type="button" class="red-button" pButton icon="pi pi-times"
+              (click)="deleteContinent(cntnt.id)"></button><br>
+          </span>
+          <span *ngIf="editMode"><button type="button" class="blue-button" pButton icon="pi pi-plus"
+              (click)="addContinent()"></button></span>
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Countries</b></td>
+        <td> <span *ngFor="let cntry of startup.countryObj"> {{ cntry.name }}&nbsp;
+            <button *ngIf="editMode" type="button" class="red-button" pButton icon="pi pi-times"
+              (click)="deleteCountry(cntry.id)"></button><br>
+          </span>
+          <span *ngIf="editMode"><button type="button" class="blue-button" pButton icon="pi pi-plus"
+              (click)="addCountry()"></button></span>
+        </td>
+      </tr>
+    </table>
   </div>
 </div>

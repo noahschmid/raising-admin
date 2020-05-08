@@ -9,17 +9,16 @@ import {DynamicDialogConfig} from 'primeng/dynamicdialog';
 })
 export class PickerComponent implements OnInit {
 
-  items: any;
+  items: [];
 
   constructor(public ref: DynamicDialogRef,
     public config: DynamicDialogConfig) { }
 
   ngOnInit(): void {
-    this.items = (this.config as any).items;
+    this.items = (this.config as any).data;
   }
 
   selectItem(item) {
     this.ref.close(item);
   }
-
 }

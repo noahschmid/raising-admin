@@ -22,55 +22,72 @@ export class InvestorComponent implements OnInit {
       if(loaded) {
         if(!this.investor) {
           this.loadInvestor();
-          this.populateNames
+          this.populateInvestor();
         } else {
-          this.populateNames();
+          this.populateInvestor();
         }
       } else {
         this.loadInvestor();
+        this.publicInformation.loadFromBackend();
       }
     })
   }
 
-  populateNames() {
+  populateInvestor() {
         this.investor.country = this.publicInformation.getCountry(this.investor.countryId).name;
         this.investor.investorType = this.publicInformation.getInvestorType(this.investor.investorTypeId).name;
         this.investor.ticketMin = this.publicInformation.getTicketSize(this.investor.ticketMinId).name;
         this.investor.ticketMax = this.publicInformation.getTicketSize(this.investor.ticketMaxId).name;
 
+        this.investor.ticketRange = [];
+        
+        this.investor.ticketSizes = this.publicInformation.getTicketSizes();
+
+        console.log(this.investor.ticketSizes);
+
+        for(let i = 0; i < this.investor.ticketSizes.length; ++i) {
+          if(this.investor.ticketSizes[i].id == this.investor.ticketMinId) {
+            this.investor.ticketRange.push(i);
+          }
+          if(this.investor.ticketSizes[i].id == this.investor.ticketMaxId) {
+            this.investor.ticketRange.push(i);
+            break;
+          }
+        }
+
         let ids = this.investor.investmentPhases;
-        this.investor.investmentPhaseNames = [];
+        this.investor.investmentPhaseObj = [];
         for(let invId in ids) {
           let id = ids[invId];
-          this.investor.investmentPhaseNames.push(this.publicInformation.getInvestmentPhase(id).name);
+          this.investor.investmentPhaseObj.push(this.publicInformation.getInvestmentPhase(id));
         }
 
         ids = this.investor.support;
-        this.investor.supportNames = [];
+        this.investor.supportObj = [];
         for(let invId in ids) {
           let id = ids[invId];
-          this.investor.supportNames.push(this.publicInformation.getSupport(id).name);
+          this.investor.supportObj.push(this.publicInformation.getSupport(id));
         }
 
         ids = this.investor.continents;
-        this.investor.continentNames = [];
+        this.investor.continentObj = [];
         for(let invId in ids) {
           let id = ids[invId];
-          this.investor.continentNames.push(this.publicInformation.getContinent(id).name);
+          this.investor.continentObj.push(this.publicInformation.getContinent(id));
         }
 
         ids = this.investor.industries;
-        this.investor.industryNames = [];
+        this.investor.industryObj = [];
         for(let invId in ids) {
           let id = ids[invId];
-          this.investor.industryNames.push(this.publicInformation.getIndustry(id).name);
+          this.investor.industryObj.push(this.publicInformation.getIndustry(id));
         }
 
         ids = this.investor.countries;
-        this.investor.countryNames = [];
+        this.investor.countryObj = [];
         for(let invId in ids) {
           let id = ids[invId];
-          this.investor.countryNames.push(this.publicInformation.getCountry(id).name);
+          this.investor.countryObj.push(this.publicInformation.getCountry(id));
         }
   }
 
