@@ -16,11 +16,14 @@ import {
 import {
   EndpointService
 } from 'src/app/services/endpoint-service/endpoint.service';
+import { SpinnerComponent } from 'src/app/components/spinner/spinner.component';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  providers: [DialogService]
 })
 export class LoginComponent implements OnInit {
 
@@ -49,9 +52,12 @@ export class LoginComponent implements OnInit {
   constructor(private authService: AuthService,
     private formBuilder: FormBuilder,
     private router: Router,
-    private endpointService: EndpointService) {
+    private endpointService: EndpointService,
+    private dialogService : DialogService) {
     this.hide = true;
   }
+
+  msg  = [];
 
   toggleHide() {
     this.hide = !this.hide;
@@ -65,12 +71,20 @@ export class LoginComponent implements OnInit {
   }
 
   onClickLogin(): void {
+    this.msg = [];
     if (this.loginForm.invalid) {
+      this.msg.push({severity:'error', summary:'Login failed', detail:'Invalid Email Address', closable:false})
       return;
     }
+
+    let spinner = this.dialogService.open(SpinnerComponent, {
+      showHeader:false,
+      closable:false,
+      styleClass:"spinner"
+    });
+
     this.hide = true;
     this.error = false;
-    this.hide = false;
     let responseReturned = false;
     const val = this.loginForm.value;
 
@@ -82,7 +96,9 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           dev = true;
+          
           if (responseReturned) {
+            spinner.close();
             this.endpointService.setAllowed(dev, prod);
             this.router.navigate(['admin/dashboard']);
           }
@@ -90,9 +106,12 @@ export class LoginComponent implements OnInit {
         },
         error => {
           if (responseReturned) {
+            spinner.close();
             if(!prod) {
               console.log("error");
               this.errorMessage = 'Login failed';
+
+              this.msg.push({severity:'error', summary:'Login failed', detail:'Invalid Credentials or no Admin', closable:false});
               this.error = true;
             } else {
               this.endpointService.setAllowed(dev, prod);
@@ -110,6 +129,7 @@ export class LoginComponent implements OnInit {
         data => {
           prod = true;
           if (responseReturned) {
+            spinner.close();
             this.endpointService.setAllowed(dev, prod);
             this.router.navigate(['admin/dashboard']);
           }
@@ -118,9 +138,10 @@ export class LoginComponent implements OnInit {
         error => {
           prod = false;
           if (responseReturned) {
+            spinner.close();
             if (!dev) {
               console.log("error");
-              this.errorMessage = 'Login failed';
+              this.msg.push({severity:'error', summary:'Login failed', detail:'Invalid Credentials or no Admin', closable:false});
               this.error = true;
             } else {
               this.endpointService.setAllowed(dev, prod);
