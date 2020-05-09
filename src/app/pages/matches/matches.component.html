@@ -1,4 +1,4 @@
-<p-table #dt selectionMode="single" [value]="matchList" [autoLayout]="true" [columns]="cols" [paginator]="true" [rows]="10"
+<p-table #dt selectionMode="single" [(selection)]="selectedRelatinship" (onRowSelect)="onRowSelect($event)" [value]="matchList" [autoLayout]="true" [columns]="cols" [paginator]="true" [rows]="10"
   [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
   <ng-template pTemplate="caption">
     <div style="text-align: right">
@@ -14,12 +14,30 @@
         <p-sortIcon field="matchId" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
           ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
       </th>
-      <th>Investor</th>
-      <th>Startup</th>
-      <th>State</th>
-      <th>Score</th>
-      <th>Interactions</th>
-      <th>Last Changed</th>
+      <th pSortableColumn="investor">Investor
+        <p-sortIcon field="investor" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+          ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+      </th>
+      <th pSortableColumn="startup">Startup
+        <p-sortIcon field="startup" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+          ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+      </th>
+      <th pSortableColumn="state">State
+        <p-sortIcon field="state" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+          ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+      </th>
+      <th pSortableColumn="score">Score
+        <p-sortIcon field="score" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+          ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+      </th>
+      <th pSortableColumn="interactions">Interactions
+        <p-sortIcon field="interactions" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+          ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+      </th>
+      <th pSortableColumn="lastChanged">Last Changed
+        <p-sortIcon field="lastChanged" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order"
+          ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+      </th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-match let-columns="columns">

@@ -35,12 +35,14 @@ import {
 import {
   MessageService
 } from 'primeng/api';
+import { SpinnerComponent } from 'src/app/components/spinner/spinner.component';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-accounts',
   templateUrl: './accounts.component.html',
   styleUrls: ['./accounts.component.scss'],
-  providers: [MessageService]
+  providers: [MessageService, DialogService]
 })
 export class AccountsComponent implements OnInit {
 
@@ -49,7 +51,8 @@ export class AccountsComponent implements OnInit {
     public dialog: MatDialog,
     public endpointService: EndpointService,
     private publicInformationService: PublicInformationService,
-    private messageService: MessageService) {}
+    private messageService: MessageService,
+    private dialogService : DialogService) {}
 
   ngOnInit(): void {
     this.endpointService.observeDevMode.subscribe(data => {
@@ -78,7 +81,14 @@ export class AccountsComponent implements OnInit {
   cols: any[];
   rows = 10;
 
+  loading: boolean = false;
+
   getAllAccounts() {
+    let spinner = this.dialogService.open(SpinnerComponent, {
+      showHeader:false,
+      closable:false,
+      styleClass:"spinner"
+    });
     this.accountService.getAllAccounts().subscribe(
       data => {
         this.accountList = [];
@@ -146,8 +156,11 @@ export class AccountsComponent implements OnInit {
 
           return parseInt(filter) > value;
         }
+
+        spinner.close();
       },
       err => {
+        spinner.close();
         console.log(err);
       });
   }
@@ -190,7 +203,6 @@ export class AccountsComponent implements OnInit {
       }
     });
   }
-
 
   next() {
     this.first = this.first + this.rows;

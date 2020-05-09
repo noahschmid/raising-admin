@@ -57,6 +57,9 @@ import {CalendarModule} from 'primeng/calendar';
 import { AccountDetailsComponent } from './components/account-details/account-details.component';
 import { MatchesComponent } from './pages/matches/matches.component';
 import { PublicComponent } from './pages/public/public.component';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+
 
 @NgModule({
   declarations: [
@@ -78,6 +81,7 @@ import { PublicComponent } from './pages/public/public.component';
     AccountDetailsComponent,
     MatchesComponent,
     PublicComponent,
+    SpinnerComponent,
   ],
   imports: [
     NgbModule,
@@ -107,7 +111,8 @@ import { PublicComponent } from './pages/public/public.component';
     CodeHighlighterModule,
     DataViewModule,
     SliderModule,
-    CalendarModule
+    CalendarModule,
+    ProgressSpinnerModule
   ],
   providers: [
     {
