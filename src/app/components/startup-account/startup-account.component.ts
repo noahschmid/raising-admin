@@ -50,8 +50,10 @@ export class StartupAccountComponent implements OnInit {
   }
 
   toggleEdit() {
+    this.startup.closingTime = this.formatDate(this.startup.closingTimeDate);
+
     if(this.editMode) {
-      this.accountService.updateInvestor(this.startup).subscribe(data => {
+      this.accountService.updateStartup(this.startup).subscribe(data => {
         this.messageService.add({severity:'success', summary:'Startup updated'});
       }, err => {
         this.messageService.add({severity:'error', summary:'Action failed'});
@@ -192,6 +194,23 @@ export class StartupAccountComponent implements OnInit {
     });
   }
 
+  handleClosingTimeChange(event) {
+    this.startup.closingTime = this.formatDate(this.startup.closingTimeDate);
+  }
+
+  formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
 
   addInvestorType() {
     const ref = this.dialogService.open(PickerComponent, {
@@ -300,15 +319,15 @@ export class StartupAccountComponent implements OnInit {
 
   addLabel() {
     const ref = this.dialogService.open(PickerComponent, {
-      header: 'Choose a Country',
-      data:this.publicInformationService.getCountries()
+      header: 'Choose a Label',
+      data:this.publicInformationService.getLabels()
     });
     
     ref.onClose.subscribe((result) => { 
       this.accountService.addAssignment(this.startup.accountId, "label", result.id,  "startup")
         .subscribe(data => {
-        this.startup.countries.push(result.id);
-        this.startup.countryObj.push(result);
+        this.startup.labels.push(result.id);
+        this.startup.labelObj.push(result);
         this.showSuccessToast("Label added");
       }, err => {
         this.showErrorToast();

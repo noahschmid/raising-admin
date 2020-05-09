@@ -21,4 +21,12 @@ export class MatchService {
     getAllHandshakes(): Observable<[]>{
       return this.httpClient.get<[]>(this.EndpointService.getUrl() + "admin/handshake/");
     }
+
+    /**
+   * Fetches all accounts from the backend
+   * @returns an observable with the server response
+   */
+    getAllRelationships(): Observable<[]>{
+      return this.httpClient.get<[]>(this.EndpointService.getUrl() + "admin/relationship/");
+    }
 }

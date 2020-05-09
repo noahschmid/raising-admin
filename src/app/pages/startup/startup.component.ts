@@ -97,6 +97,8 @@ export class StartupComponent implements OnInit {
 
     this.startup.revenue = this.publicInformationService.getRevenues();
 
+    this.startup.closingTimeDate = new Date(this.startup.closingTime);
+
     for (let i = 0; i < this.startup.revenue.length; ++i) {
       if (this.startup.ticketSizes[i].id == this.startup.revenueMinId) {
         this.startup.revenueRange.push(i);

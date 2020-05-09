@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { AccountService } from 'src/app/services/account-service/account.service';
 import { EndpointService } from 'src/app/services/endpoint-service/endpoint.service';
 import { AuthService } from 'src/app/services/auth-service/auth.service';
+import { AccountDetailsComponent } from 'src/app/components/account-details/account-details.component';
+import { PublicInformationService } from 'src/app/services/public-information-service/public-information.service';
 
 @Component({
   selector: 'app-account',
@@ -21,7 +23,8 @@ export class AccountComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     public endpointService: EndpointService,
     private accountService : AccountService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    private publicInformation: PublicInformationService) { }
 
   ngOnInit(): void {
     this.sub = this.route.params.subscribe(params => {
@@ -32,6 +35,7 @@ export class AccountComponent implements OnInit {
       }
       this.accountService.getAccount(this.id).subscribe(data => {
         this.account = data;
+        this.account.country = this.publicInformation.getCountry(this.account.countryId).name;
       })
    });
   }

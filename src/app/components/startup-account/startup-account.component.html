@@ -94,14 +94,15 @@
         <td><b>Revenue</b></td>
         <td><span> {{ formatRevenue(startup.revenueMin) }} - {{ formatRevenue(startup.revenueMax) }} </span>
           <p-slider *ngIf="editMode" [(ngModel)]="startup.revenueRange" [step]="1" [min]="0"
-            [max]="startup.revenue.length - 1" (onChange)="handleRevenueChange($event)" [range]="true"></p-slider>
+            [max]="startup.revenue.length - 1" [range]="true"></p-slider>
         </td>
       </tr>
 
       <tr>
         <td><b>Closing Time</b></td>
         <td><span *ngIf="!editMode"> {{ startup.closingTime }} </span>
-          <input  *ngIf="editMode" pInput id="closingTime" [(ngModel)]="startup.closingTime" />
+          <p-calendar *ngIf="editMode" [(ngModel)]="startup.closingTimeDate" (onChange)="handleClosingTimeChange($event)" 
+          [inline]="true" dateFormat="yyyy-mm-dd"></p-calendar>
         </td>
       </tr>
 
@@ -113,7 +114,7 @@
       </tr>
 
       <tr>
-        <td><b>Completed</b></td>
+        <td><b>Committed</b></td>
         <td><span *ngIf="!editMode"> {{ startup.raised }} </span>
           <input  *ngIf="editMode" pInput id="raised" [(ngModel)]="startup.raised" />
         </td>

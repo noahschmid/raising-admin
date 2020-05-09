@@ -53,6 +53,10 @@ import {MessagesModule} from 'primeng/messages';
 import {CodeHighlighterModule} from 'primeng/codehighlighter';
 import {DataViewModule} from 'primeng/dataview';
 import {SliderModule} from 'primeng/slider';
+import {CalendarModule} from 'primeng/calendar';
+import { AccountDetailsComponent } from './components/account-details/account-details.component';
+import { MatchesComponent } from './pages/matches/matches.component';
+import { PublicComponent } from './pages/public/public.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +75,9 @@ import {SliderModule} from 'primeng/slider';
     InvestorAccountComponent,
     StartupAccountComponent,
     PickerComponent,
+    AccountDetailsComponent,
+    MatchesComponent,
+    PublicComponent,
   ],
   imports: [
     NgbModule,
@@ -99,7 +106,8 @@ import {SliderModule} from 'primeng/slider';
     MessagesModule,
     CodeHighlighterModule,
     DataViewModule,
-    SliderModule
+    SliderModule,
+    CalendarModule
   ],
   providers: [
     {

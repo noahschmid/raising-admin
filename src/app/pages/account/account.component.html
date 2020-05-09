@@ -1,17 +1,2 @@
-
-
-<div *ngIf="account != null" class="container">
-    <img class="circle-img" [src]="account.profilePictureId > 0 ? endpointService.getUrl() + 'media/profilepicture/'
-                + account.profilePictureId : 'assets/images/user.png'" />
-    <div class="center-info">
-    <b class="title">{{ account.firstName }} {{ account.lastName }}</b>
-    <ul> 
-        <li></li>
-        <li> {{ account.description }} </li>
-        <li> {{ account.pitch }} </li>
-        <li> {{ account.ticketMinId }} - {{ account.ticketMaxId }}</li>
-        <li> Desired involvement: {{ account.support }} </li>
-        <li> Interested in: {{ account.industries }} </li>
-    </ul>
-  </div>
-</div>
+<p-card>
+<app-account-details [account]="account"></app-account-details></p-card>

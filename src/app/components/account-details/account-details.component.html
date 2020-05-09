@@ -1,0 +1,45 @@
+<div *ngIf="account != null" class="container">
+    <p-toast></p-toast>
+    <div style="align-items:left; align-content:left; text-align:left">
+      <img *ngIf="account.roles=='ROLE_ADMIN'" class="circle-img-sm" src="/assets/images/admin.png" />
+      <button pButton type="button" class="admin-button" icon="pi pi-user-plus" label="Make Admin" (click)="makeAdmin()"
+        *ngIf="account.roles!='ROLE_ADMIN'"></button>
+    </div>
+    <div style="align-items: right; align-content:right; text-align:right">
+      <button pButton type="button" class="blue-button" (click)="toggleEdit()"
+        [icon]="editMode ? 'pi pi-save' : 'pi pi-pencil'"></button>
+    </div>
+  
+    <img class="circle-img" [src]="account.profilePictureId > 0 ? endpointService.getUrl() + 'media/profilepicture/'
+                    + account.profilePictureId : 'assets/images/user.png'" />
+    <div class="center-info">
+  
+      <b class="title" *ngIf="!editMode">{{ account.firstName }} {{ account.lastName }}</b>
+      <input *ngIf="editMode" pInputText id="firstName" [(ngModel)]="account.firstName" /> <input *ngIf="editMode"
+        pInputText id="lastName" [(ngModel)]="account.lastName" />
+      <table cellspacing="0" cellpadding="0">
+        <tr>
+          <td style="width:20em"><b> Country</b></td>
+          <td>{{ account.country }}&nbsp;
+            <button *ngIf="editMode" pButton class="blue-button" icon="pi pi-pencil" (click)="changeCountry()"></button>
+          </td>
+        </tr>
+  
+        <tr>
+          <td><b>Description</b></td>
+          <td><span *ngIf="!editMode"> {{ account.description }} </span>
+            <textarea [rows]="2" [cols]="50" *ngIf="editMode" pInputText id="description"
+              [(ngModel)]="account.description"></textarea></td>
+        </tr>
+  
+        <tr>
+          <td><b>Pitch</b></td>
+          <td><span *ngIf="!editMode"> {{ account.pitch }} </span>
+            <textarea [rows]="10" [cols]="50" *ngIf="editMode" pInputTextarea id="pitch"
+              [(ngModel)]="account.pitch"></textarea>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  

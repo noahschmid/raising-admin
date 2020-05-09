@@ -29,6 +29,8 @@ import {
 } from './pages/account/account.component';
 import { StartupComponent } from './pages/startup/startup.component';
 import { InvestorComponent } from './pages/investor/investor.component';
+import { MatchesComponent } from './pages/matches/matches.component';
+import { PublicComponent } from './pages/public/public.component';
 
 const routes: Routes = [{
     path: '',
@@ -89,6 +91,20 @@ const routes: Routes = [{
         component: StartupComponent,
         data:{
           breadcrumb:'Startup'
+        }
+      },
+      {
+        path: 'matches',
+        component: MatchesComponent,
+        data:{
+          breadcrumb:'Matches'
+        }
+      },
+      {
+        path: 'public',
+        component: PublicComponent,
+        data: {
+          breadcrumb:'Public Information'
         }
       },
       {
