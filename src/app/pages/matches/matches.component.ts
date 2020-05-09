@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatchService } from 'src/app/services/match-service/match.service';
+import { EndpointService } from 'src/app/services/endpoint-service/endpoint.service';
 
 @Component({
   selector: 'app-matches',
@@ -8,7 +9,8 @@ import { MatchService } from 'src/app/services/match-service/match.service';
 })
 export class MatchesComponent implements OnInit {
 
-  constructor(private matchService : MatchService) { }
+  constructor(private matchService : MatchService,
+    private endpointService : EndpointService) { }
 
   matchList = [];
 
@@ -21,10 +23,20 @@ export class MatchesComponent implements OnInit {
   rows = 10;
 
   ngOnInit(): void {
+    this.endpointService.observeDevMode.subscribe(data => {
+      this.getAllRelationships();
+    });
+
+    this.getAllRelationships();
+  }
+
+  getAllRelationships() {
     this.matchService.getAllRelationships().subscribe(data => {
       this.matchList = data;
-    })
+    });
   }
+
+
 
   formatDate(date) {
     var d = new Date(date),
