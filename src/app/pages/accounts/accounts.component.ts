@@ -89,6 +89,7 @@ export class AccountsComponent implements OnInit {
       closable:false,
       styleClass:"spinner"
     });
+
     this.accountService.getAllAccounts().subscribe(
       data => {
         this.accountList = [];
@@ -318,6 +319,31 @@ export class AccountsComponent implements OnInit {
       for (let invId in ids) {
         let id = ids[invId];
         this.account.investorTypeObj.push(this.publicInformationService.getInvestorType(id));
+      }
+
+      ids = this.account.labels;
+      this.account.labelObj = [];
+      for (let invId in ids) {
+        let id = ids[invId];
+        this.account.labelObj.push(this.publicInformationService.getLabel(id));
+      }
+
+      this.account.revenueMin = this.publicInformationService.getRevenue(this.account.revenueMinId).name;
+      this.account.revenueMax = this.publicInformationService.getRevenue(this.account.revenueMaxId).name;
+      this.account.revenueRange = [];
+
+      this.account.revenue = this.publicInformationService.getRevenues();
+
+      this.account.closingTimeDate = new Date(this.account.closingTime);
+
+      for (let i = 0; i < this.account.revenue.length; ++i) {
+        if (this.account.ticketSizes[i].id == this.account.revenueMinId) {
+          this.account.revenueRange.push(i);
+        }
+        if (this.account.ticketSizes[i].id == this.account.revenueMaxId) {
+          this.account.revenueRange.push(i);
+          break;
+        }
       }
     }
 

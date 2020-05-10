@@ -194,10 +194,6 @@ export class StartupAccountComponent implements OnInit {
     });
   }
 
-  handleClosingTimeChange(event) {
-    this.startup.closingTime = this.formatDate(this.startup.closingTimeDate);
-  }
-
   formatDate(date) {
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),
