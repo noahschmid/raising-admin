@@ -101,7 +101,7 @@
       <tr>
         <td><b>Closing Time</b></td>
         <td><span *ngIf="!editMode"> {{ startup.closingTime }} </span>
-          <p-calendar *ngIf="editMode" [(ngModel)]="startup.closingTimeDate" (onChange)="handleClosingTimeChange($event)" 
+          <p-calendar *ngIf="editMode" [(ngModel)]="startup.closingTimeDate" 
           [inline]="true" dateFormat="yyyy-mm-dd"></p-calendar>
         </td>
       </tr>
