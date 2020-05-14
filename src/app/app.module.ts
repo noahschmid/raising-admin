@@ -59,7 +59,8 @@ import { MatchesComponent } from './pages/matches/matches.component';
 import { PublicComponent } from './pages/public/public.component';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import { SpinnerComponent } from './components/spinner/spinner.component';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
+import {FileUploadModule} from 'primeng/fileupload';
 
 @NgModule({
   declarations: [
@@ -112,7 +113,9 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     DataViewModule,
     SliderModule,
     CalendarModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    FlexLayoutModule,
+    FileUploadModule
   ],
   providers: [
     {

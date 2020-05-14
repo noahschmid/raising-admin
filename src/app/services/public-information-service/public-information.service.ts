@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../auth-service/auth.service';
 import { EndpointService } from 'src/app/services/endpoint-service/endpoint.service';
 import { Observable, from } from 'rxjs';
@@ -151,5 +151,17 @@ export class PublicInformationService {
     return this.financeTypes.find((type) => {
       return type.id == id;
     });
+  }
+
+  getIcons() {
+      return this.httpClient.get<[]>(this.EndpointService.getUrl() + "media/icon");
+  }
+
+  patchIcon(id, icon) {
+    const formData : FormData = new FormData();
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'image/png');
+    formData.append('icon', icon, icon.name);
+      return this.httpClient.patch<[]>(this.EndpointService.getUrl() + "media/icon/" + id, formData, { headers:headers});
   }
 }

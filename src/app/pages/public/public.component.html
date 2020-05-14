@@ -1,1 +1,12 @@
-<p>Coming soon</p>
+<p-card header = "Click on the desired icon to upload a new image">
+<div fxLayout="row wrap" fxLayoutGap="25px" fxFlexAlign="center">
+    <div fxLayout="column" class="icon-wrapper" *ngFor="let icon of icons">
+        <img src="{{'data:image/jpg;base64,' + icon.icon}}" class="icon" (click)="selectItem(icon.id)"/>
+        <p-dialog [(visible)] = "selected==icon.id">
+            <input size="50" type="file" id="file" (change)="handleFileInput($event.target.files)">
+        </p-dialog>
+    </div>
+</div>
+</p-card>
+
+<p-toast></p-toast>
