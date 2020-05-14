@@ -3,7 +3,7 @@
     <div fxLayout="column" class="icon-wrapper" *ngFor="let icon of icons">
         <img src="{{'data:image/jpg;base64,' + icon.icon}}" class="icon" (click)="selectItem(icon.id)"/>
         <p-dialog [(visible)] = "selected==icon.id">
-            <input size="50" type="file" id="file" (change)="handleFileInput($event.target.files)">
+            <input size="50" accept=".png" type="file" id="file" (change)="handleFileInput($event.target.files)">
         </p-dialog>
     </div>
 </div>
