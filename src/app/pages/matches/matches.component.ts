@@ -62,7 +62,7 @@ export class MatchesComponent implements OnInit {
         spinner.close();
 
         this.cols = [{
-            field: 'id',
+            field: 'matchId',
             header: 'id'
           },
           {

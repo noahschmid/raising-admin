@@ -129,16 +129,20 @@ export class AccountsComponent implements OnInit {
 
 
         this.cols = [{
-            field: 'id',
-            header: 'id'
+            field: 'accountId',
+            header: 'ID'
+          },
+          {
+            field:'companyName',
+            header:'Company Name'
           },
           {
             field: 'firstName',
-            header: 'first name'
+            header: 'First Name'
           },
           {
             field: 'lastName',
-            header: 'last name'
+            header: 'Last Name'
           },
           {
             field: 'type',
