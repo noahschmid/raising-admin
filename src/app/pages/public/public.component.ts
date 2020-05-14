@@ -35,7 +35,7 @@ export class PublicComponent implements OnInit {
   }
 
   handleFileInput(files: FileList) {
-      this.publicInformationService.patchIcon(this.selectItem, files.item(0)).subscribe(data => {
+      this.publicInformationService.patchIcon(this.selected, files.item(0)).subscribe(data => {
         this.messageService.add({severity:'success', summary:"Icon successfully updated"});
         this.selected = -1;
         this.publicInformationService.getIcons().subscribe(data => {
