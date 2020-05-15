@@ -22,6 +22,11 @@ export class PublicComponent implements OnInit {
   fileToUpload: File = null;
 
   ngOnInit(): void {
+    this.endpointService.observeDevMode.subscribe(mode => {
+      this.publicInformationService.getIcons().subscribe(data => {
+        this.icons = data;
+      });
+    });
     this.publicInformationService.getIcons().subscribe(data => {
       this.icons = data;
     });
