@@ -160,8 +160,7 @@ export class PublicInformationService {
   patchIcon(id, icon) {
     const formData : FormData = new FormData();
     let headers = new HttpHeaders();
-    headers = headers.set('Content-Type', 'image/png');
     formData.append('icon', icon, icon.name);
-      return this.httpClient.patch<[]>(this.EndpointService.getUrl() + "media/icon/" + id, formData, { headers:headers});
+      return this.httpClient.patch<any>(this.EndpointService.getUrl() + "media/icon/" + id, formData, { headers:headers});
   }
 }
