@@ -69,7 +69,7 @@ export class StartupAccountComponent implements OnInit {
   }
 
   /**
-   * Toggle between edit and non edit mode
+   * Toggle between edit and non edit mode and save account if needed
    */
   toggleEdit() {
     this.startup.closingTime = this.formatDate(this.startup.closingTimeDate);
