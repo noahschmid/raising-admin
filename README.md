@@ -7,7 +7,7 @@
 
 ---
 
-<p align="center"> This is the Admin Panel of our app Rai$ing. 
+<p align="center"> This is the Admin Panel of our app Rai$ing. You can find our project deliverables <a href="https://github.com/olistaehli/raising-deliverables">here!</a>
     <br> 
 </p>
 
