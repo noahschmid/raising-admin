@@ -22,7 +22,7 @@
 
 ## Live Version <a name="live"/>
 
-There is a up to date running version of the admin panel on http://raising-admin.herokuapp.com/
+There is an up to date running version of the admin panel on http://raising-admin.herokuapp.com/
 
 ## Local Installation <a name="local"/>
 
