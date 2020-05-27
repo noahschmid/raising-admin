@@ -12,12 +12,19 @@
 </p>
 
 ## 📝 Table of Contents
-1. [Local Installation](#local)
-2. [Development](#development)
-3. [Scaffolding](#scaffolding)
-4. [Build](#build)
-5. [Additional Help](#help)
-6. [Authors](#authors)
+1. [Live Version](#live)
+2. [Local Installation](#local)
+3. [Development](#development)
+4. [Scaffolding](#scaffolding)
+5. [Build](#build)
+6. [Additional Help](#help)
+7. [Authors](#authors)
+
+## Live Version <a name="live"/>
+
+**There is an up to date running version of the admin panel on http://raising-admin.herokuapp.com/.** <br/>
+Use the username noah.schmid77@gmail.com and password raisingunibe to log in.
+
 
 ## Local Installation <a name="local"/>
 
