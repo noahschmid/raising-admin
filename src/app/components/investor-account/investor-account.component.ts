@@ -6,6 +6,10 @@ import { PickerComponent } from '../picker/picker.component';
 import { DialogService } from 'primeng/dynamicdialog/';
 import { PublicInformationService } from 'src/app/services/public-information-service/public-information.service';
 
+/**
+ * Manages updating a single investor account
+ */
+
 @Component({
   selector: 'app-investor-account',
   templateUrl: './investor-account.component.html',
@@ -30,14 +34,25 @@ export class InvestorAccountComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Show a simple error message
+   */
   showErrorToast() {
     this.messageService.add({severity:'error', summary:'Action failed'});
   }
 
+  /**
+   * Show a success message
+   * @param text the text to display
+   */
   showSuccessToast(text : string) {
     this.messageService.add({severity:'success', summary:text});
   }
 
+  /**
+   * Update ticket sizes when slider gets changed
+   * @param event slider change event
+   */
   handleSliderChange(event : any) {
     this.investor.ticketMin = this.investor.ticketSizes[event.values[0]].name;
     this.investor.ticketMax = this.investor.ticketSizes[event.values[1]].name;
@@ -45,6 +60,9 @@ export class InvestorAccountComponent implements OnInit {
     this.investor.ticketMaxId = this.investor.ticketSizes[event.values[1]].id;
   }
 
+  /**
+   * Toggle between edit mode and non edit mode
+   */
   toggleEdit() {
     if(this.editMode) {
       this.accountService.updateInvestor(this.investor).subscribe(data => {
@@ -57,6 +75,9 @@ export class InvestorAccountComponent implements OnInit {
     this.editMode = !this.editMode;
   }
 
+  /**
+   * Change country of investor
+   */
   changeCountry() {
     const ref = this.dialogService.open(PickerComponent, {
       header: 'Choose a Country',
@@ -69,6 +90,9 @@ export class InvestorAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Change type of investor
+   */
   changeInvestorType() {
     const ref = this.dialogService.open(PickerComponent, {
       header: 'Choose an Investor Type',
@@ -81,6 +105,10 @@ export class InvestorAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Pretty print a ticket size
+   * @param tSize ticket size amount
+   */
   formatTicketSize(tSize : number) {
     let unit = "";
     let val = tSize;
@@ -96,6 +124,9 @@ export class InvestorAccountComponent implements OnInit {
     return "CHF " + val + unit;
   }
 
+  /**
+   * Add a new involvement to investor
+   */
   addInvolvement() {
     const ref = this.dialogService.open(PickerComponent, {
       header: 'Choose an Involvement',
@@ -114,6 +145,10 @@ export class InvestorAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Delete involvement of investor
+   * @param id id of involvement
+   */
   deleteInvolvement(id) {
     console.log("delete assignment " + id);
     this.accountService.deleteAssignment(this.investor.accountId, "support", id, "account")
@@ -127,6 +162,9 @@ export class InvestorAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Add a new industry to investor
+   */
   addIndustry() {
     const ref = this.dialogService.open(PickerComponent, {
       header: 'Choose an Industry',
@@ -144,6 +182,10 @@ export class InvestorAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Delete industry from investor
+   * @param id id of industry
+   */
   deleteIndustry(id) {
     console.log("delete assignment " + id);
     this.accountService.deleteAssignment(this.investor.accountId, "industry", id, "account")
@@ -156,7 +198,9 @@ export class InvestorAccountComponent implements OnInit {
     });
   }
 
-
+  /**
+   * Add new investment phase to investor
+   */
   addInvestmentPhase() {
     const ref = this.dialogService.open(PickerComponent, {
       header: 'Choose an Investment Phase',
@@ -176,6 +220,10 @@ export class InvestorAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Delete investment phase from investor
+   * @param id id of investment phase
+   */
   deleteInvestmentPhase(id) {
     console.log("delete assignment " + id);
     this.accountService.deleteAssignment(this.investor.accountId, "investmentphase", id, "investor")
@@ -189,6 +237,9 @@ export class InvestorAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Give the investor admin rights
+   */
   makeAdmin() {
     let inv = this.investor;
     inv.roles = "ROLE_ADMIN"
@@ -200,7 +251,9 @@ export class InvestorAccountComponent implements OnInit {
     });
   }
 
-  
+  /**
+   * Add a new continent to investor
+   */
   addContinent() {
     const ref = this.dialogService.open(PickerComponent, {
       header: 'Choose a Continent',
@@ -220,6 +273,10 @@ export class InvestorAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Delete continent from investor
+   * @param id id of continent
+   */
   deleteContinent(id) {
     this.accountService.deleteAssignment(this.investor.accountId, "continent", id, "account")
     .subscribe(data => {
@@ -232,6 +289,9 @@ export class InvestorAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Add new coutry to investor
+   */
   addCountry() {
     const ref = this.dialogService.open(PickerComponent, {
       header: 'Choose a Country',
@@ -251,6 +311,10 @@ export class InvestorAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Delete country from investor
+   * @param id id of country
+   */
   deleteCountry(id) {
     this.accountService.deleteAssignment(this.investor.accountId, "country", id, "account")
     .subscribe(data => {

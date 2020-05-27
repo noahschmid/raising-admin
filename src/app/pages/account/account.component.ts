@@ -6,6 +6,9 @@ import { AuthService } from 'src/app/services/auth-service/auth.service';
 import { AccountDetailsComponent } from 'src/app/components/account-details/account-details.component';
 import { PublicInformationService } from 'src/app/services/public-information-service/public-information.service';
 
+/**
+ * Get information about a single account
+ */
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
@@ -17,22 +20,19 @@ export class AccountComponent implements OnInit {
   private sub: any;
   account;
 
-  devToken;
-  prodToken;
-
   constructor(private route: ActivatedRoute,
     public endpointService: EndpointService,
     private accountService : AccountService,
     private authService: AuthService,
     private publicInformation: PublicInformationService) { }
 
+    /**
+     * Get account
+     */
   ngOnInit(): void {
     this.sub = this.route.params.subscribe(params => {
       this.id = +params['id'];
-      if(this.id == parseInt(this.authService.getId())) {
-        this.devToken = this.authService.getDevToken();
-        this.prodToken = this.authService.getProdToken();
-      }
+
       this.accountService.getAccount(this.id).subscribe(data => {
         this.account = data;
         this.account.country = this.publicInformation.getCountry(this.account.countryId).name;
@@ -40,6 +40,9 @@ export class AccountComponent implements OnInit {
    });
   }
 
+  /**
+   * Unsubscribe from observable
+   */
   ngOnDestroy() {
     this.sub.unsubscribe();
   }

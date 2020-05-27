@@ -6,6 +6,10 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { PublicInformationService } from 'src/app/services/public-information-service/public-information.service';
 import { PickerComponent } from '../picker/picker.component';
 
+/**
+ * This class manages updating a single startup 
+ */
+
 @Component({
   selector: 'app-startup-account',
   templateUrl: './startup-account.component.html',
@@ -27,14 +31,25 @@ export class StartupAccountComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Show simple error message
+   */
   showErrorToast() {
     this.messageService.add({severity:'error', summary:'Action failed'});
   }
 
+  /**
+   * Show a success message
+   * @param text the text to display
+   */
   showSuccessToast(text : string) {
     this.messageService.add({severity:'success', summary:text});
   }
 
+  /**
+   * Change ticket sizes when slider changes
+   * @param event the slider event
+   */
   handleSliderChange(event : any) {
     this.startup.ticketMin = this.startup.ticketSizes[event.values[0]].name;
     this.startup.ticketMax = this.startup.ticketSizes[event.values[1]].name;
@@ -42,6 +57,10 @@ export class StartupAccountComponent implements OnInit {
     this.startup.ticketMaxId = this.startup.ticketSizes[event.values[1]].id;
   }
 
+   /**
+   * Change revenue when slider changes
+   * @param event the slider event
+   */
   handleRevenueChange(event : any) {
     this.startup.revenueMin = this.startup.revenue[event.values[0]].name;
     this.startup.revenueMax = this.startup.revenue[event.values[1]].name;
@@ -49,6 +68,9 @@ export class StartupAccountComponent implements OnInit {
     this.startup.revenueMaxId = this.startup.revenue[event.values[1]].id;
   }
 
+  /**
+   * Toggle between edit and non edit mode
+   */
   toggleEdit() {
     this.startup.closingTime = this.formatDate(this.startup.closingTimeDate);
 
@@ -63,6 +85,9 @@ export class StartupAccountComponent implements OnInit {
     this.editMode = !this.editMode;
   }
 
+  /**
+   * Change country of startup
+   */
   changeCountry() {
     const ref = this.dialogService.open(PickerComponent, {
       header: 'Choose a Country',
@@ -75,6 +100,9 @@ export class StartupAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Change investment phase of startup
+   */
   changeInvestmentPhase() {
     const ref = this.dialogService.open(PickerComponent, {
       header: 'Choose an Investment Phase',
@@ -87,6 +115,9 @@ export class StartupAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Change finance type of startup
+   */
   changeFinanceType() {
     const ref = this.dialogService.open(PickerComponent, {
       header: 'Choose a Finance Type',
@@ -99,6 +130,11 @@ export class StartupAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Pretty print a ticket size
+   * @param tSize ticket size amount
+   * @return string containing ticket size
+   */
   formatTicketSize(tSize : number) {
     let unit = "";
     let val = tSize;
@@ -114,6 +150,11 @@ export class StartupAccountComponent implements OnInit {
     return "CHF " + val + unit;
   }
 
+  /**
+   * Pretty print a revenue
+   * @param tSize revenue amount
+   * @return string containing revenue
+   */
   formatRevenue(tSize : number) {
     let unit = "";
     let val = tSize;
@@ -134,6 +175,9 @@ export class StartupAccountComponent implements OnInit {
     return "CHF " + val + unit;
   }
 
+  /**
+   * Add involvement to startup
+   */
   addInvolvement() {
     const ref = this.dialogService.open(PickerComponent, {
       header: 'Choose an Involvement',
@@ -152,6 +196,10 @@ export class StartupAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Delete involvement from startup
+   * @param id id of involvement
+   */
   deleteInvolvement(id) {
     console.log("delete assignment " + id);
     this.accountService.deleteAssignment(this.startup.accountId, "support", id, "account")
@@ -165,6 +213,9 @@ export class StartupAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Add new industry to startup
+   */
   addIndustry() {
     const ref = this.dialogService.open(PickerComponent, {
       header: 'Choose an Industry',
@@ -182,6 +233,10 @@ export class StartupAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Delete industry from startup
+   * @param id id of industry
+   */
   deleteIndustry(id) {
     console.log("delete assignment " + id);
     this.accountService.deleteAssignment(this.startup.accountId, "industry", id, "account")
@@ -194,6 +249,11 @@ export class StartupAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Format a date to a prettier looking format
+   * @param date the date to format
+   * @return string containing pretty printed date
+   */
   formatDate(date) {
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),
@@ -208,6 +268,9 @@ export class StartupAccountComponent implements OnInit {
     return [year, month, day].join('-');
 }
 
+/**
+ * Add new investor type to startup
+ */
   addInvestorType() {
     const ref = this.dialogService.open(PickerComponent, {
       header: 'Choose an Investor Type',
@@ -227,6 +290,10 @@ export class StartupAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Delete investor tpe from startup
+   * @param id id of investor type
+   */
   deleteInvestorType(id) {
     this.accountService.deleteAssignment(this.startup.accountId, "investortype", id, "startup")
     .subscribe(data => {
@@ -239,6 +306,9 @@ export class StartupAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Give startup admin rights
+   */
   makeAdmin() {
     let inv = this.startup;
     inv.roles = "ROLE_ADMIN"
@@ -250,7 +320,9 @@ export class StartupAccountComponent implements OnInit {
     });
   }
 
-  
+  /**
+   * Add new continent to startup
+   */
   addContinent() {
     const ref = this.dialogService.open(PickerComponent, {
       header: 'Choose a Continent',
@@ -270,6 +342,10 @@ export class StartupAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Delete continent from startup
+   * @param id id of continent
+   */
   deleteContinent(id) {
     this.accountService.deleteAssignment(this.startup.accountId, "continent", id, "account")
     .subscribe(data => {
@@ -282,6 +358,9 @@ export class StartupAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Add country to startup
+   */
   addCountry() {
     const ref = this.dialogService.open(PickerComponent, {
       header: 'Choose a Country',
@@ -301,6 +380,10 @@ export class StartupAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Delete country from startup
+   * @param id id of country
+   */
   deleteCountry(id) {
     this.accountService.deleteAssignment(this.startup.accountId, "country", id, "account")
     .subscribe(data => {
@@ -313,6 +396,9 @@ export class StartupAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Add label to startup
+   */
   addLabel() {
     const ref = this.dialogService.open(PickerComponent, {
       header: 'Choose a Label',
@@ -332,6 +418,10 @@ export class StartupAccountComponent implements OnInit {
     });
   }
 
+  /**
+   * Delete label from startup
+   * @param id id of label
+   */
   deleteLabel(id) {
     this.accountService.deleteAssignment(this.startup.accountId, "label", id, "startup")
     .subscribe(data => {

@@ -5,6 +5,9 @@ import { MatchService } from 'src/app/services/match-service/match.service';
 import { EndpointService } from 'src/app/services/endpoint-service/endpoint.service';
 import * as Chart from 'chart.js';
 
+/**
+ * Manages statistics retrieved from backend and displays them in a nice way
+ */
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -19,6 +22,9 @@ export class DashboardComponent implements OnInit {
 
     data: any;
 
+    /**
+     * Get statistics from backend and create dummy data for diagram
+     */
   ngOnInit(): void {
     this.EndpointService.observeDevMode.subscribe(data => {
       this.getAllAccounts();
@@ -67,6 +73,9 @@ export class DashboardComponent implements OnInit {
   startupList = [];
   handshakes = [];
 
+  /**
+   * Get all accounts from backend
+   */
   getAllAccounts() {
     this.accountService.getAllAccounts().subscribe(
         data => {
@@ -101,7 +110,9 @@ export class DashboardComponent implements OnInit {
         });
       }
 
-
+      /**
+       * Get all handshakes from backend
+       */
       getAllHandshakes() {
         this.matchesService.getAllHandshakes().subscribe(data => {
           this.handshakes = data;

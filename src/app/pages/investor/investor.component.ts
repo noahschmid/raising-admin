@@ -3,6 +3,10 @@ import { AccountService } from 'src/app/services/account-service/account.service
 import { ActivatedRoute } from '@angular/router';
 import { PublicInformationService } from 'src/app/services/public-information-service/public-information.service';
 import { InvestorAccountComponent } from 'src/app/components/investor-account/investor-account.component';
+
+/**
+ * Populate investor account with public resources so the additional information can be displayed
+ */
 @Component({
   selector: 'app-investor',
   templateUrl: './investor.component.html',
@@ -17,6 +21,9 @@ export class InvestorComponent implements OnInit {
   id: number;
   private sub: any;
 
+  /**
+   * Load investor and public information from backend if needed
+   */
   ngOnInit(): void {
     this.publicInformation.hasLoaded.subscribe(loaded => {
       if(loaded) {
@@ -33,6 +40,9 @@ export class InvestorComponent implements OnInit {
     })
   }
 
+  /**
+   * Populate investor with public resources
+   */
   populateInvestor() {
         this.investor.country = this.publicInformation.getCountry(this.investor.countryId).name;
         this.investor.investorType = this.publicInformation.getInvestorType(this.investor.investorTypeId).name;
@@ -91,6 +101,9 @@ export class InvestorComponent implements OnInit {
         }
   }
 
+  /**
+   * Load investor from backend
+   */
   loadInvestor() {
     this.sub = this.route.params.subscribe(params => {
       this.id = +params['id'];
@@ -100,6 +113,9 @@ export class InvestorComponent implements OnInit {
    });
   }
 
+  /**
+   * Unsubscribe from observable
+   */
   ngOnDestroy() {
     this.sub.unsubscribe();
   }

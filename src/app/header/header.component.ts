@@ -8,7 +8,10 @@ import { EndpointService } from '../services/endpoint-service/endpoint.service';
 import { PublicInformationService } from '../services/public-information-service/public-information.service';
 import { MessageService } from 'primeng/api';
 
-
+/**
+ * This class watches out that all global data is available such as the current endpoint and
+ * the public resources as well as the logged in user account.
+ */
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -35,6 +38,10 @@ export class HeaderComponent implements OnInit {
 
   prodMode = true;
 
+  /**
+   * Observe endpoint service and set prodMode accordinly. Also observes the publicInformationService
+   * so the resources get loaded from backend
+   */
   ngOnInit(): void {
     this.prodMode = !this.endpointService.isInDevMode();
       this.endpointService.observeDevMode.subscribe(data => {
@@ -47,6 +54,9 @@ export class HeaderComponent implements OnInit {
     this.publicInformationService.hasLoaded.subscribe(data => {});
   }
 
+  /**
+   * Get account of logged in user
+   */
   getAccount() {
     this.accountService.getAccount(this.authService.getId()).subscribe(data => {
       this.username = (data as any).firstName;
@@ -59,23 +69,38 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  /**
+   * Toggle between enabling and disabling the server toggle button
+   */
   toggleProfile() {
     this.toggle = !this.toggle;
   }
 
+  /**
+   * Disable the server toggle button
+   */
   profileOff() {
     this.toggle = false;
   }
 
+  /**
+   * Log the current user out
+   */
   logout() {
     this.authService.logout();
     this.router.navigate(['login']);
   }
 
+  /**
+   * Toggles between dev and prod server mode
+   */
   toggleServerMode() {
     this.endpointService.setDevMode(!this.prodMode);
   }
 
+  /**
+   * Copies the current access token to the clipboard
+   */
   copyToken() {
     if(!this.prodMode)
       this.copyToClipboard(this.authService.getDevToken());
@@ -83,6 +108,10 @@ export class HeaderComponent implements OnInit {
       this.copyToClipboard(this.authService.getProdToken());
   }
 
+  /**
+   * Copies a string to the clipboard
+   * @param item the string to copy 
+   */
   copyToClipboard(item) {
     document.addEventListener('copy', (e: ClipboardEvent) => {
       e.clipboardData.setData('text/plain', (item));

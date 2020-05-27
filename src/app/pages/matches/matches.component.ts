@@ -17,6 +17,9 @@ import {
 import { DialogService } from 'primeng/dynamicdialog';
 import { SpinnerComponent } from 'src/app/components/spinner/spinner.component';
 
+/**
+ * Loads and displays matches from backend
+ */
 @Component({
   selector: 'app-matches',
   templateUrl: './matches.component.html',
@@ -41,6 +44,9 @@ export class MatchesComponent implements OnInit {
 
   loading: boolean = false;
 
+  /**
+   * Observe endpoint service and refresh matches if needed
+   */
   ngOnInit(): void {
     this.endpointService.observeDevMode.subscribe(data => {
       this.getAllRelationships();
@@ -49,6 +55,9 @@ export class MatchesComponent implements OnInit {
     this.getAllRelationships();
   }
 
+  /**
+   * Get all matches from backend
+   */
   getAllRelationships() {
     let spinner = this.dialogService.open(SpinnerComponent, {
       showHeader:false,
@@ -109,8 +118,11 @@ export class MatchesComponent implements OnInit {
       });
   }
 
-
-
+  /**
+   * Formate a date to look prettier 
+   * @param date the date to format
+   * @return String containing pretty printed date
+   */
   formatDate(date) {
     var d = new Date(date),
       month = '' + (d.getMonth() + 1),
@@ -129,6 +141,10 @@ export class MatchesComponent implements OnInit {
     return [day, month, year].join('.') + " " + [hour, minute, seconds].join(':');
   }
 
+  /**
+   * Sort the columns as strings
+   * @param event the SortEvent
+   */
   customSort(event: SortEvent) {
     event.data.sort((data1, data2) => {
       let value1 = data1[event.field];
@@ -150,27 +166,45 @@ export class MatchesComponent implements OnInit {
     });
   }
 
+  /**
+   * Get to next page on the table
+   */
   next() {
     this.first = this.first + this.rows;
   }
 
+  /**
+   * Get to previous page on the table
+   */
   prev() {
     this.first = this.first - this.rows;
   }
 
+  /**
+   * Reset page of table
+   */
   reset() {
     this.first = 0;
   }
 
+  /**
+   * Whether current page is the last page
+   */
   isLastPage(): boolean {
     return this.first === (this.matchList.length - this.rows);
   }
 
+  /**
+   * Whether the current page is the first page
+   */
   isFirstPage(): boolean {
     return this.first === 0;
   }
 
+  /**
+   * Gets called when row is selected. Does nothing at the moment
+   * @param event the row select event
+   */
   onRowSelect(event) {
-
   }
 }

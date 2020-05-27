@@ -5,6 +5,10 @@ import { EndpointService } from 'src/app/services/endpoint-service/endpoint.serv
 import { Observable, from } from 'rxjs';
 import { of } from "rxjs";
 
+/**
+ * This class manages all public resources. It loads them from the backend and allows for
+ * quick searching and updating of icons.
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -27,6 +31,9 @@ export class PublicInformationService {
     private EndpointService: EndpointService) { 
   }
 
+  /**
+   * Boolean observable that indicates whether resources have been loaded from backend 
+   */
   hasLoaded = new Observable(observer => {
     if(this.loaded) {
       observer.next(true);
@@ -74,6 +81,7 @@ export class PublicInformationService {
     });
   }
 
+  // -- getters for all the arrays --
   getCountries() { return this.countries; }
   getContinents() { return this.continents; }
   getTicketSizes() { return this.ticketSizes; }
@@ -86,6 +94,7 @@ export class PublicInformationService {
   getFinanceTypes() { return this.financeTypes; }
   getRevenues() { return this.revenue; }
 
+  // -- getters for individual resources --
   getCountry(id) {
     return this.getCountries().find((country) => {
       return country.id == id;
@@ -153,10 +162,18 @@ export class PublicInformationService {
     });
   }
 
+  /**
+   * Get all icons from backend
+   */
   getIcons() {
       return this.httpClient.get<[]>(this.EndpointService.getUrl() + "media/icon");
   }
 
+  /**
+   * Update resource icon
+   * @param id id of icon
+   * @param icon new icon
+   */
   patchIcon(id, icon) {
     const formData : FormData = new FormData();
     let headers = new HttpHeaders();

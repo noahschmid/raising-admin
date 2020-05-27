@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { MenuItem } from 'primeng/api/menuitem';
 import { Subject, Observable } from 'rxjs';
 
+/**
+ * Set and update breadcrumb menu
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -14,6 +17,10 @@ export class BreadcrumbService {
     this.crumbs$ = this.crumbs.asObservable();
   }
 
+  /**
+   * Update breadcrumb menu
+   * @param items items for the breadcrumb menu
+   */
   setCrumbs(items: MenuItem[]) {
     this.crumbs.next(
       (items || []).map(item =>

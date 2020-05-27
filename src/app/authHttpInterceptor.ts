@@ -10,6 +10,9 @@ import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { from } from 'rxjs';
 
+/**
+ * This class injects the access token (if exists) to each backend request
+ */
 @Injectable()
 export class AuthHttpInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
@@ -18,6 +21,11 @@ export class AuthHttpInterceptor implements HttpInterceptor {
     return from(this.handleAccess(request, next));
   }
 
+  /**
+   * Inject access token to request
+   * @param request http request
+   * @param next next handler
+   */
   private async handleAccess(request: HttpRequest<any>, next: HttpHandler):
       Promise<HttpEvent<any>> {
     const token = await this.authService.getToken();
@@ -38,5 +46,4 @@ export class AuthHttpInterceptor implements HttpInterceptor {
       headers: newHeader});
     return next.handle(changedRequest).toPromise();
   }
-
 }

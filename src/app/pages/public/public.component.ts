@@ -3,6 +3,9 @@ import { PublicInformationService } from 'src/app/services/public-information-se
 import { EndpointService } from 'src/app/services/endpoint-service/endpoint.service';
 import { MessageService } from 'primeng/api';
 
+/**
+ * Displays all icons from the database and lets the user change them
+ */
 @Component({
   selector: 'app-public',
   templateUrl: './public.component.html',
@@ -20,6 +23,9 @@ export class PublicComponent implements OnInit {
   selected = -1;
   fileToUpload: File = null;
 
+  /**
+   * Observe dev mode and refresh icons if needed
+   */
   ngOnInit(): void {
     this.endpointService.observeDevMode.subscribe(mode => {
       this.publicInformationService.getIcons().subscribe(data => {
@@ -31,6 +37,10 @@ export class PublicComponent implements OnInit {
     });
   }
 
+  /**
+   * Select icon
+   * @param id id of icon
+   */
   selectItem(id) {
     if(id != this.selected)
       this.selected = id;
@@ -38,6 +48,10 @@ export class PublicComponent implements OnInit {
       this.selected = -1;
   }
 
+  /**
+   * Handle the file upload after selecting a file
+   * @param files selected files (should only be one)
+   */
   handleFileInput(files: FileList) {
       this.publicInformationService.patchIcon(this.selected, files.item(0)).subscribe(data => {
         this.messageService.add({severity:'success', summary:"Icon successfully updated"});

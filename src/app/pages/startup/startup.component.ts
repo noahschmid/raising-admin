@@ -15,6 +15,9 @@ import {
   PublicInformationService
 } from 'src/app/services/public-information-service/public-information.service';
 
+/**
+ * Populate investor account with public resources so the additional information can be displayed
+ */
 @Component({
   selector: 'app-startup',
   templateUrl: './startup.component.html',
@@ -29,6 +32,9 @@ export class StartupComponent implements OnInit {
   id: number;
   private sub: any;
 
+  /**
+   * Subscribe to public information service and refresh startup if needed
+   */
   ngOnInit(): void {
     this.publicInformationService.hasLoaded.subscribe(loaded => {
       if (loaded) {
@@ -45,6 +51,9 @@ export class StartupComponent implements OnInit {
     })
   }
 
+  /**
+   * Load startup from backend
+   */
   loadStartup() {
     this.sub = this.route.params.subscribe(params => {
       this.id = +params['id'];
@@ -54,10 +63,16 @@ export class StartupComponent implements OnInit {
     });
   }
 
+  /**
+   * Unsubscribe from observers
+   */
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
+  /**
+   * Populate startup with public resources
+   */
   populateStartup() {
     let ids = [];
     this.startup.country = this.publicInformationService.getCountry(this.startup.countryId).name;

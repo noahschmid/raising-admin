@@ -38,6 +38,9 @@ import {
 import { SpinnerComponent } from 'src/app/components/spinner/spinner.component';
 import { DialogService } from 'primeng/dynamicdialog';
 
+/**
+ * Manages a list of accounts
+ */
 @Component({
   selector: 'app-accounts',
   templateUrl: './accounts.component.html',
@@ -54,8 +57,13 @@ export class AccountsComponent implements OnInit {
     private messageService: MessageService,
     private dialogService : DialogService) {}
 
+    /**
+     * Subscribe to endpoint service in case of endpoint changes, subscribe to public information service
+     * to get public resources and get accounts from backend
+     */
   ngOnInit(): void {
     this.endpointService.observeDevMode.subscribe(data => {
+      this.reset();
       this.publicInformationService.hasLoaded.subscribe(loaded => {
         if (loaded) {
           this.getAllAccounts();
@@ -96,6 +104,9 @@ export class AccountsComponent implements OnInit {
 
   loading: boolean = false;
 
+  /**
+   * Get accounts from backend and initialize variables needed for the table
+   */
   getAllAccounts() {
     let spinner = this.dialogService.open(SpinnerComponent, {
       showHeader:false,
@@ -220,26 +231,45 @@ export class AccountsComponent implements OnInit {
     });
   }
 
+  /**
+   * Get to next page in the table
+   */
   next() {
     this.first = this.first + this.rows;
   }
 
+  /**
+   * Get to previous page in the table
+   */
   prev() {
     this.first = this.first - this.rows;
   }
 
+  /**
+   * Reset page for table
+   */
   reset() {
     this.first = 0;
   }
 
+  /**
+   * Whether or not current page is last page of table
+   */
   isLastPage(): boolean {
     return this.first === (this.accountList.length - this.rows);
   }
 
+  /**
+   * Whether or not current page is first page of table
+   */
   isFirstPage(): boolean {
     return this.first === 0;
   }
 
+  /**
+   * Sort column as strings
+   * @param event instance of SortEvent
+   */
   customSort(event: SortEvent) {
     event.data.sort((data1, data2) => {
       let value1 = data1[event.field];
@@ -261,12 +291,9 @@ export class AccountsComponent implements OnInit {
     });
   }
 
-  showDialogToAdd() {
-    this.newAccount = true;
-    this.account = {};
-    this.displayDialog = true;
-  }
-
+  /**
+   * Save changes to selected account
+   */
   save() {
     let accounts = [...this.accountList];
     if (this.newAccount)
@@ -280,6 +307,9 @@ export class AccountsComponent implements OnInit {
     this.selectedAccount = {};
   }
 
+  /**
+   * Delete selected account
+   */
   delete() {
     let index = this.accountList.indexOf(this.selectedAccount);
     this.accountList = this.accountList.filter((val, i) => i != index);
@@ -288,6 +318,11 @@ export class AccountsComponent implements OnInit {
     this.selectedAccount = {};
   }
 
+  /**
+   * Gets called when a row is selected. Retrieves the selected account from the account list
+   * and populates it. Then opens up a new dialog containing account details
+   * @param event the select event
+   */
   onRowSelect(event) {
     if (event.data.type == 'Investor') {
       this.accountService.getInvestor(event.data.accountId).subscribe(data => {
@@ -306,16 +341,25 @@ export class AccountsComponent implements OnInit {
     }
   }
 
+  /**
+   * Start editing the selected account
+   */
   editAccount() {
     this.newAccount = false;
     this.displayDialog = true;
   }
 
+  /**
+   * Show selected account in a new dialog
+   */
   showAccount() {
     this.newAccount = false;
     this.displayDialog = true;
   }
 
+  /**
+   * Populate account with public resources
+   */
   populateAccount() {
     let ids = [];
 
@@ -413,8 +457,11 @@ export class AccountsComponent implements OnInit {
     console.log(this.account);
   }
 
+  /**
+   * Refresh accounts when dialog gets closed
+   * @param event hide event
+   */
   onDialogHide(event) {
-    console.log("beforehide");
     this.getAllAccounts();
   }
 }

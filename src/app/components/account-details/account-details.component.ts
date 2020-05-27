@@ -6,6 +6,11 @@ import { DialogService } from 'primeng/dynamicdialog';
 import { PublicInformationService } from 'src/app/services/public-information-service/public-information.service';
 import { PickerComponent } from '../picker/picker.component';
 
+
+/**
+ * Manages updating a single account 
+ */
+
 @Component({
   selector: 'app-account-details',
   templateUrl: './account-details.component.html',
@@ -30,6 +35,9 @@ export class AccountDetailsComponent implements OnInit {
 
     ngOnInit() {}
 
+    /**
+     * Make account admin
+     */
   makeAdmin() {
     let inv = this.account;
     inv.roles = "ROLE_ADMIN"
@@ -41,6 +49,9 @@ export class AccountDetailsComponent implements OnInit {
     });
   }
 
+  /**
+   * Toggle between edit mode and non edit mode
+   */
   toggleEdit() {
     if(this.editMode) {
       this.accountService.updateAccount(this.account).subscribe(data => {
@@ -53,13 +64,24 @@ export class AccountDetailsComponent implements OnInit {
     this.editMode = !this.editMode;
   }
 
+  /**
+   * Display a simple error message
+   */
   showErrorToast() {
     this.messageService.add({severity:'error', summary:'Action failed'});
   }
 
+  /**
+   * Display a success message
+   * @param text the text to display
+   */
   showSuccessToast(text : string) {
     this.messageService.add({severity:'success', summary:text});
   }
+
+  /**
+   * Change country of account
+   */
   changeCountry() {
     const ref = this.dialogService.open(PickerComponent, {
       header: 'Choose a Country',

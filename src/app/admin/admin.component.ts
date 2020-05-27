@@ -7,6 +7,11 @@ import {MenuItem} from 'primeng/api';
 import { isNullOrUndefined } from 'util';
 import {filter} from 'rxjs/operators';
 
+/**
+ * This class creates and manages the items for the breadcrumb menue
+ */
+
+
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
@@ -20,14 +25,15 @@ export class AdminComponent implements OnInit {
     public activatedRoute : ActivatedRoute) {
     if(!authService.isLoggedIn())
       router.navigate(['login']);
-
-    //  this.createBreadcrumbs(this.activatedRoute);
   }
 
   activePage="dashboard";
   readonly home = {icon: 'pi pi-home', url: '/admin'};
   menuItems: MenuItem[];
 
+  /**
+   * Get current route and pass it to createBreadcrumbs
+   */
   ngOnInit(): void {
     this.menuItems = [
   { 
@@ -37,6 +43,12 @@ export class AdminComponent implements OnInit {
       .subscribe(() => this.menuItems = this.createBreadcrumbs(this.activatedRoute.root));
   }
 
+  /**
+   * Parse current route and automatically create breadcrumb items
+   * @param route the current route
+   * @param url the current url
+   * @param breadcrumbs the current breadcrumb items
+   */
   private createBreadcrumbs(route: ActivatedRoute, url: string = '#', breadcrumbs: MenuItem[] = []): MenuItem[] {
     const children: ActivatedRoute[] = route.children;
 

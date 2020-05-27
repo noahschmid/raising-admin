@@ -19,6 +19,9 @@ import {
 import { SpinnerComponent } from 'src/app/components/spinner/spinner.component';
 import { DialogService } from 'primeng/dynamicdialog';
 
+/**
+ * Handles login to both servers
+ */
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -70,6 +73,11 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /**
+   * First check if inputs are empty. If not, create two login requests - one for the dev and one 
+   * for the prod server with the same credentials. One of those requests has to succeed, else
+   * an error message will be displayed.
+   */
   onClickLogin(): void {
     this.msg = [];
     if (this.loginForm.invalid) {
@@ -152,5 +160,4 @@ export class LoginComponent implements OnInit {
         }
       );
   }
-
 }

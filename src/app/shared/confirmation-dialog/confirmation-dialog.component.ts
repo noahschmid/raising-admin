@@ -1,6 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
+/**
+ * A class that implements a simple confirmation dialog
+ */
 
 @Component({
   selector: 'app-confirmation-dialog',
@@ -13,6 +16,9 @@ export class ConfirmationDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public message: string) { }
 
+  /**
+   * Close dialog
+   */
   onNoClick(): void {
     this.dialogRef.close();
   }

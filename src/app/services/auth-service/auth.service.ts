@@ -8,14 +8,7 @@ import { Observable } from 'rxjs';
 import{ EndpointService } from '../../services/endpoint-service/endpoint.service';
 
 /**
- * Authentication Service handling
- *  - `login`,
- *  - `registration`,
- *  - `verification`,
- *  - `verification email resend`,
- *  - `forgot password`,
- *  - `reset password`
- * communication with backend
+ * Authentication Service handling login communication with backend
  *
  * Sets sessionToken in `localStorage` and reads them to check the login and role of the logged in user
  */
@@ -39,10 +32,10 @@ export class AuthService {
   };
 
   /**
-   * Tries to login with the given email and password
+   * Tries to login to dev server with the given email and password
    * @param email the email of the user
    * @param password the password of the user
-   * @return an Observable with data as {@link User}
+   * @return an Observable with data as {@link Account}
    */
   devLogin(email: string, password: string): Observable<HttpResponse<Account>> {
     console.log("logging into dev server...");
@@ -60,6 +53,12 @@ export class AuthService {
       );
   }
 
+   /**
+   * Tries to login to prod server with the given email and password
+   * @param email the email of the user
+   * @param password the password of the user
+   * @return an Observable with data as {@link Account}
+   */
   prodLogin(email: string, password: string): Observable<HttpResponse<Account>> {
     console.log("logging into prod server...");
     return this.httpClient
@@ -102,19 +101,21 @@ export class AuthService {
   }
 
   /**
-   * Sets the token to the localStorage
+   * Saves the dev token to the localStorage
    */
   private setDevSession(authResult) {
     localStorage.setItem('devtoken', authResult.token);
   }
 
-
+  /**
+   * Saves the prod token to the localStorage
+   */
   private setProdSession(authResult) {
     localStorage.setItem('prodtoken', authResult.token);
   }
 
   /**
-   * sets the non-verified-user to the localStorage.
+   * Save the account to the localStorage.
    */
   private setAccount(registrationResult) {
     localStorage.setItem('id', registrationResult.createdUser._id);
@@ -181,10 +182,18 @@ export class AuthService {
     return localStorage.getItem('prodtoken');
   }
 
+  /**
+   * Returns the dev token
+   * @return dev token
+   */
   public getDevToken(): string {
     return localStorage.getItem('devtoken');
   }
 
+  /**
+   * Returns the prod token
+   * @return prod token
+   */
   public getProdToken(): string {
     return localStorage.getItem('prodtoken');
   }
