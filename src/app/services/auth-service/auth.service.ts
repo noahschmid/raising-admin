@@ -45,7 +45,7 @@ export class AuthService {
    * @return an Observable with data as {@link User}
    */
   devLogin(email: string, password: string): Observable<HttpResponse<Account>> {
-    console.log("logging in...");
+    console.log("logging into dev server...");
     return this.httpClient
       .post<Account>(
         this.EndpointService.getDevUrl() + 'admin/login',
@@ -54,7 +54,6 @@ export class AuthService {
       )
       .pipe(
         map(res => {
-          console.log(res);
           this.setDevSession(res);
           return res;
         })
@@ -62,7 +61,7 @@ export class AuthService {
   }
 
   prodLogin(email: string, password: string): Observable<HttpResponse<Account>> {
-    console.log("logging in...");
+    console.log("logging into prod server...");
     return this.httpClient
       .post<Account>(
         this.EndpointService.getProdUrl() + 'admin/login',
@@ -71,7 +70,6 @@ export class AuthService {
       )
       .pipe(
         map(res => {
-          console.log(res);
           this.setProdSession(res);
           return res;
         })

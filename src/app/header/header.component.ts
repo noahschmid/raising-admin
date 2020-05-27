@@ -38,16 +38,13 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.prodMode = !this.endpointService.isInDevMode();
       this.endpointService.observeDevMode.subscribe(data => {
-        console.log(data);
       this.prodMode = !data;
       this.getAccount();
     });
 
     this.getAccount();
 
-    this.publicInformationService.hasLoaded.subscribe(data => {
-      console.log("hasloaded: " + data);
-    });
+    this.publicInformationService.hasLoaded.subscribe(data => {});
   }
 
   getAccount() {

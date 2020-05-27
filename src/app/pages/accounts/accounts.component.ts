@@ -56,10 +56,23 @@ export class AccountsComponent implements OnInit {
 
   ngOnInit(): void {
     this.endpointService.observeDevMode.subscribe(data => {
-      this.getAllAccounts();
+      this.publicInformationService.hasLoaded.subscribe(loaded => {
+        if (loaded) {
+          this.getAllAccounts();
+        } else {
+          this.publicInformationService.loadFromBackend();
+        }
+      });
+      
     });
 
-    this.getAllAccounts();
+    this.publicInformationService.hasLoaded.subscribe(loaded => {
+      if (loaded) {
+        this.getAllAccounts();
+      } else {
+        this.publicInformationService.loadFromBackend();
+      }
+    });
   }
 
   /**
@@ -101,8 +114,6 @@ export class AccountsComponent implements OnInit {
         let investors = (data as any).investors;
         let startups = (data as any).startups;
         let accounts = (data as any).accounts;
-
-        console.log(data);
 
         for (let account in (data as any).accounts) {
           (data as any).accounts[account].type = "Account";
@@ -307,6 +318,7 @@ export class AccountsComponent implements OnInit {
 
   populateAccount() {
     let ids = [];
+
     this.account.country = this.publicInformationService.getCountry(this.account.countryId).name;
     if (this.account.type == 'Investor') {
       this.account.investorType = this.publicInformationService.getInvestorType(this.account.investorTypeId).name;
@@ -340,11 +352,13 @@ export class AccountsComponent implements OnInit {
 
       this.account.closingTimeDate = new Date(this.account.closingTime);
 
+      this.account.revenue = this.publicInformationService.getRevenues();
+
       for (let i = 0; i < this.account.revenue.length; ++i) {
-        if (this.account.ticketSizes[i].id == this.account.revenueMinId) {
+        if (this.account.revenue[i].id == this.account.revenueMinId) {
           this.account.revenueRange.push(i);
         }
-        if (this.account.ticketSizes[i].id == this.account.revenueMaxId) {
+        if (this.account.revenue[i].id == this.account.revenueMaxId) {
           this.account.revenueRange.push(i);
           break;
         }
@@ -353,7 +367,6 @@ export class AccountsComponent implements OnInit {
 
     this.account.ticketMin = this.publicInformationService.getTicketSize(this.account.ticketMinId).name;
     this.account.ticketMax = this.publicInformationService.getTicketSize(this.account.ticketMaxId).name;
-
 
     this.account.ticketRange = [];
 
@@ -396,6 +409,8 @@ export class AccountsComponent implements OnInit {
       let id = ids[invId];
       this.account.countryObj.push(this.publicInformationService.getCountry(id));
     }
+
+    console.log(this.account);
   }
 
   onDialogHide(event) {

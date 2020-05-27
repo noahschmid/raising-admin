@@ -96,8 +96,6 @@ export class InvestorComponent implements OnInit {
       this.id = +params['id'];
       this.accountService.getInvestor(this.id).subscribe(data => {
         this.investor = data;
-
-        console.log(this.investor);
       })
    });
   }

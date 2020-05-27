@@ -46,7 +46,6 @@ export class AccountService {
     updateInvestor(investor: any) {
       delete investor.email;
       delete investor.password;
-      console.log(investor);
       return this.httpClient.patch(this.EndpointService.getUrl() + "investor/" + investor.accountId, investor);
     }
 

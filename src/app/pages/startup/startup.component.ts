@@ -50,8 +50,6 @@ export class StartupComponent implements OnInit {
       this.id = +params['id'];
       this.accountService.getStartup(this.id).subscribe(data => {
         this.startup = data;
-
-        console.log(this.startup);
       })
     });
   }
@@ -95,15 +93,15 @@ export class StartupComponent implements OnInit {
     this.startup.revenueMax = this.publicInformationService.getRevenue(this.startup.revenueMaxId).name;
     this.startup.revenueRange = [];
 
-    this.startup.revenue = this.publicInformationService.getRevenues();
-
     this.startup.closingTimeDate = new Date(this.startup.closingTime);
 
+    this.startup.revenue = this.publicInformationService.getRevenues();
+
     for (let i = 0; i < this.startup.revenue.length; ++i) {
-      if (this.startup.ticketSizes[i].id == this.startup.revenueMinId) {
+      if (this.startup.revenue[i].id == this.startup.revenueMinId) {
         this.startup.revenueRange.push(i);
       }
-      if (this.startup.ticketSizes[i].id == this.startup.revenueMaxId) {
+      if (this.startup.revenue[i].id == this.startup.revenueMaxId) {
         this.startup.revenueRange.push(i);
         break;
       }

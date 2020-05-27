@@ -14,7 +14,6 @@ export class PublicComponent implements OnInit {
   constructor(private publicInformationService : PublicInformationService,
     private endpointService: EndpointService,
     private messageService: MessageService) {
-
    }
 
   icons:any[];
