@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { AuthService } from '../services/auth-service/auth.service';
-import { AccountService } from '../services/account-service/account.service';
+import { AuthService } from '../../services/auth-service/auth.service';
+import { AccountService } from '../../services/account-service/account.service';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
-import { EndpointService } from '../services/endpoint-service/endpoint.service';
-import { PublicInformationService } from '../services/public-information-service/public-information.service';
+import { EndpointService } from '../../services/endpoint-service/endpoint.service';
+import { PublicInformationService } from '../../services/public-information-service/public-information.service';
 import { MessageService } from 'primeng/api';
 
 /**

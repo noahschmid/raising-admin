@@ -20,15 +20,15 @@ import {
   AppFooterModule,
   AppSidebarModule,
 } from '@coreui/angular';
-import { AdminComponent } from './admin/admin.component';
-import { HeaderComponent } from './header/header.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { HeaderComponent } from './components/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthHttpInterceptor } from './authHttpInterceptor';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { SidenavComponent } from './sidenav/sidenav.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { AccountsComponent } from './pages/accounts/accounts.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { AccountComponent } from './pages/account/account.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';

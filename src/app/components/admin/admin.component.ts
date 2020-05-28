@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
 import {Router, ActivatedRoute, NavigationEnd} from "@angular/router";
-import { AuthService } from '../services/auth-service/auth.service';
-import { PublicInformationService } from '../services/public-information-service/public-information.service';
+import { AuthService } from '../../services/auth-service/auth.service';
+import { PublicInformationService } from '../../services/public-information-service/public-information.service';
 import {MenuItem} from 'primeng/api';
 import { isNullOrUndefined } from 'util';
 import {filter} from 'rxjs/operators';

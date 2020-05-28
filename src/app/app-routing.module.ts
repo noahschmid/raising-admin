@@ -16,14 +16,14 @@ import {
 } from './app.component';
 import {
   AdminComponent
-} from './admin/admin.component';
+} from './components/admin/admin.component';
 import {
   AccountsComponent
 } from './pages/accounts/accounts.component';
 
 import {
   PageNotFoundComponent
-} from './page-not-found/page-not-found.component';
+} from './components/page-not-found/page-not-found.component';
 import {
   AccountComponent
 } from './pages/account/account.component';
