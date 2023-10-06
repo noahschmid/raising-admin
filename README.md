@@ -21,12 +21,6 @@
 6. [Further Help](#help)
 7. [Authors](#authors)
 
-## Live Version <a name="live"/>
-
-**There is an up to date running version of the admin panel on http://raising-admin.herokuapp.com/.** <br/>
-Use the username noah.schmid77@gmail.com and password raisingunibe to log in.
-
-
 ## Local Installation <a name="local"/>
 
 1. Install the newest version of [NodeJs](https://nodejs.org/en/download/)
